@@ -1,0 +1,50 @@
+<template>
+  <div class="flex default test-bg-blue DEF test-menu">
+    <Nuxt />+
+  </div>
+</template>
+
+<style>
+html {
+  font-family:
+    'Source Sans Pro',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    'Helvetica Neue',
+    Arial,
+    sans-serif;
+  font-size: 16px;
+  word-spacing: 1px;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  height:100vh;
+}
+
+.test-menu{
+  min-height:100vh;
+  height:100vh;
+  position:absolute;
+  top:0;
+  bottom:0;
+  right:0;
+  left:0;
+}
+.DEF{
+  min-height: 100vh;
+  height:100vh;
+}
+body {
+ height: 100%;
+}
+.test-bg-blue{
+  background: url('https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/blue_bgtoys.png'), url('https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/bg_toys.svg')  center repeat;
+    background-blend-mode: overlay;
+
+}
+
+</style>

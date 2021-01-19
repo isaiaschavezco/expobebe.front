@@ -1,0 +1,17 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+@layer base {
+    @font-face {
+      font-family: Myriad Pro;
+      font-weight: 400;
+      src: url(https://juguetilandia.media.sfo2.cdn.digitaloceanspaces.com/assets/app/fonts/fonts/MYRIADPRO-REGULAR.OTF) format("otf");
+    }
+
+    @font-face {
+        font-family: Bogle;
+        font-weight: 400;
+        src: url(https://juguetilandia.media.sfo2.cdn.digitaloceanspaces.com/assets/app/fonts/fonts/Bogle-Regular.otf) format("otf");
+      }
+}
