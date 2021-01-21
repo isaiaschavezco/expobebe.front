@@ -1,22 +1,23 @@
 <template>
-  <div class="flex flex-col items-around test-menu bg-transparent overflow-hidden marco">
-    <header
-      class="flex justify-around items-center"
-      :style="{ backgroundColor: headerColor }"
-    >
+  <div class="flex flex-col items-around overflow-hidden h-screen z-header background">
+    <ModalListNames
+      v-if="isCatalogView"
+      :closeFunction="onCatalogClose"
+      title="Descargar catálogo"
+      :colorCard="headerColor"
+    />
+    <header class="fixed flex justify-around items-center pt-1" :class="headerColor">
       <div class="flex justify-around w-full pt-1 h-full text-center">
-        <div
-          class="flex flex-col items-center justify-center h-full w-10 ml-5 mt-1 md:ml-10"
-        >
+        <div class="flex flex-col items-center justify-center h-full ml-5 pt-2 md:ml-10">
           <img
-            class="botonHeader h-6 w-6 lg:h-8 lg:w-8 left-4 cursor-pointer"
-            src="https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/flecha_regresar_02.svg"
+            class="h-10 w-10 lg:h-12 lg:w-12 left-4 cursor-pointer"
+            src="@/assets/img/moviles/icon_back.svg"
             alt="Back"
             @click="$router.go(-1)"
           />
           <img
-            class="botonHeader mt-2 h-6 w-6 lg:h-8 lg:w-8 left-4 cursor-pointer"
-            src="https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/boton_regresar_home-02.svg"
+            class="h-10 w-10 lg:h-12 lg:w-12 left-4 cursor-pointer"
+            src="@/assets/img/moviles/icon_home.svg"
             alt="Home"
             @click="onGoToHome"
           />
@@ -32,54 +33,54 @@
         </div>
       </div>
       <div
-        v-if="buttonShopingCarStatus"
-        class="z-50 cursor-pointer flex flex-col justify-center items-center mr-5 md:mr-10 w-10 text-center"
+        class="z-50 cursor-pointer flex flex-col justify-center items-center mr-5 md:mr-10 w-12 text-center"
       >
         <img
-          class="botonHeader h-6 w-6 lg:h-8 lg:w-8 left-2 text-white"
-          :src="require('../assets/img/letter_upload.svg')"
+          class="botonHeader left-2 text-white h-10 w-10 lg:h-12 lg:w-12"
+          :src="require('@/assets/img/moviles/icon_wishlist.svg')"
           alt="ShopingCar"
           @click="onShopingCarButtonClick"
         />
       </div>
-      <div v-if="!buttonShopingCarStatus" class="mr-5 md:mr-10 w-10 text-center"></div>
+      <div class="md:mr-10 text-center"></div>
     </header>
-    <Nuxt />
+    <Nuxt class="move__header" />
 
-    <div
-      v-if="catalogState"
-      class="fixed bton flex flex-col justify-center items-center bottom-0 right-0 mr-2 z-40"
-    >
-      <div class="flex justify-center items-center h-20 w-20">
-        <img
-          class="w-12 shadow-xl md:w-20 z-50"
-          src="https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/icono_catalogo.png"
-          alt=""
-          @click="onCatalogOpen"
-        />
-      </div>
-    </div>
-    <Modal
-      :is-modal-visible="isCatalogView"
-      @onModalClick="onCatalogClose"
-      class="catalog"
-    >
-      <iframe
-        src="https://catalogowalmart.com.mx/"
-        class="layout-walmart-catalog"
-        frameborder="0"
-        allowfullscreen
+    <div class="fixed bottom-0 right-0 mr-8 z-40">
+      <img
+        v-if="currentSection === newborn"
+        class="w-12 cursor-pointer md:w-20 z-50"
+        src="https://expobebe.fra1.digitaloceanspaces.com/btn_descarga_rosa.png"
+        alt="Boton"
+        @click="onCatalogOpen"
       />
-    </Modal>
+      <img
+        v-if="currentSection === under"
+        class="w-12 cursor-pointer md:w-20 z-50"
+        src="https://expobebe.fra1.digitaloceanspaces.com/btn_descarga_morado.png"
+        alt="Boton"
+        @click="onCatalogOpen"
+      />
+      <img
+        v-if="currentSection === pregned"
+        class="w-12 cursor-pointer md:w-20 z-50"
+        src="https://expobebe.fra1.digitaloceanspaces.com/btn_descarga_azul.png"
+        alt="Boton"
+        @click="onCatalogOpen"
+      />
+    </div>
   </div>
 </template>
 
 <script>
 import Modal from "@/components/modal";
+import ModalListNames from "@/components/layout/Modal";
+import { NEWBORN, UNDER, PREGNED } from "@/types/";
 
 export default {
   components: {
     Modal,
+    ModalListNames,
   },
 
   mounted() {
@@ -94,6 +95,9 @@ export default {
     return {
       isCatalogView: false,
       isShopingCardOpen: true,
+      under: UNDER,
+      newborn: NEWBORN,
+      pregned: PREGNED,
     };
   },
   computed: {
@@ -116,6 +120,9 @@ export default {
     headerColor() {
       return this.$store.state.menu.color;
     },
+    currentSection() {
+      return this.$store.state.menu.currentSection;
+    },
     catalogState() {
       return this.$store.state.menu.isCatalogVisible;
     },
@@ -136,7 +143,7 @@ export default {
     },
     onGoToHome() {
       this.$router.push({
-        name: "juguetilandia",
+        name: "index",
       });
     },
     onShopingCardOpen() {
@@ -161,37 +168,24 @@ export default {
   -webkit-font-smoothing: antialiased;
   height: 100%;
   min-height: 100%;
-}
-.marco {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  --header-height: 13vh;
+  --header-z-index: 10000;
+  --header-z-indexplus: 20000;
 }
 
-:root > iframe {
-  position: absolute;
-  top: 0;
-  bottom: 0;
+@media screen and (max-width: 768px) {
+  .h-50 {
+    height: 60%;
+  }
 }
 
-.test-menu {
-  min-height: 100vh;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
+.precarga {
+  background: transparent url("../assets/img/moviles/icon_imagen.svg") center no-repeat;
 }
 
-.bton {
-  z-index: 1000;
-}
-
-.test-menu {
-  background: url("https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/bg_toys.svg");
+.background {
+  background: url("../assets/img/moviles/background.png");
+  background-size: cover;
 }
 
 .catalog {
@@ -199,16 +193,23 @@ export default {
 }
 
 header {
+  z-index: var(--header-z-index);
   position: relative;
   top: 0;
   left: 0;
   right: 0;
-  height: 10vh;
-  min-height: 10vh;
-  max-height: 10vh;
+  height: var(--header-height);
+  min-height: var(--header-height);
+  max-height: var(--header-height);
   padding-bottom: 1rem;
   border-bottom-left-radius: 35pt 35pt;
   border-bottom-right-radius: 35pt 35pt;
+}
+.z-index-plus {
+  z-index: var(--header-z-indexplus);
+}
+.move__header {
+  margin-top: var(--header-height);
 }
 
 .header-component-style {
@@ -216,6 +217,12 @@ header {
 
   margin-right: 0.8em;
   margin-top: 0.5em;
+}
+.card-rounded {
+  border-radius: 10%;
+  -webkit-box-shadow: 0px 2px 29px -17px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 2px 29px -17px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 2px 29px -17px rgba(0, 0, 0, 0.75);
 }
 
 .layout-walmart-catalog {
@@ -225,11 +232,6 @@ header {
   z-index: 292929292;
 }
 
-.botonHeader:active {
-  animation-name: push;
-  animation-duration: 0.1s;
-  animation-fill-mode: forwards;
-}
 .extensor {
   min-width: 20em;
   min-height: 20em;
@@ -251,16 +253,6 @@ header {
   min-width: 100%;
 }
 
-*,
-::before,
-::after {
-  box-sizing: border-box;
-  border-width: 0;
-
-  border-style: solid;
-  border-color: rgba(0, 0, 0, 0.001);
-}
-
 .boton {
   min-width: 9rem;
   padding: 0.5em;
@@ -270,6 +262,9 @@ header {
 }
 .z-2000 {
   z-index: 2000;
+}
+.rounded-2xl {
+  border-radius: 20pt;
 }
 @keyframes push {
   50% {
@@ -293,8 +288,12 @@ header {
     margin-left: 0rem;
   }
 }
-.otro {
-  border-bottom-left-radius: 20% 20%;
-  border-bottom-right-radius: 50% 20%;
+@keyframes animatedBackground {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.8;
+  }
 }
 </style>

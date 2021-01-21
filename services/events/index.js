@@ -20,7 +20,7 @@ export default http => ({
     const resource = type === NEWBORN ?  resourceNewBorn : type === PREGNED ?  resourcePregned :  resourceUnder
     return http.get(`${resource}/${eventId}`)
   },
-  getEvent360Meny (type) {
+  getEvent360Meny (eventDate,type) {
     const resource = type === NEWBORN ?  resourceNewBorn : type === PREGNED ?  resourcePregned :  resourceUnder
     return http.get(`${resource}/pagination/1?status=CREATED&greaterDate=${eventDate}&lowerDate=2021-12-12&limit=1000`)
   }

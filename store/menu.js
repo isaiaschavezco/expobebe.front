@@ -1,20 +1,39 @@
 export const state = () => ({
-    title: '',
-    color: '',
-    isCatalogVisible: true,
-    isButtonShopingCarVisible: true
+  title: '',
+  color: '',
+  isCatalogVisible: true,
+  isButtonShopingCarVisible: true,
+  currentSection: null,
+  loading: false
 })
 export const mutations = {
-    setTitle(state, title) {
-        state.title = title
-    },
-    setColor(state, color) {
-        state.color = color
-    },
-    setCatalogState(state, isView) {
-        state.isCatalogVisible = isView
-    },
-    setButtonShopingCarVisible(state, isVisible) {
-        state.isButtonShopingCarVisible = isVisible
-    }
+  setTitle (state, title) {
+    state.title = title
+  },
+  setLoading (state, status) {
+    state.loading = status
+  },
+  setCurrentSection (state, section) {
+    state.currentSection = section
+  },
+  setColor (state, color) {
+    state.color = color
+  },
+  setCatalogState (state, isView) {
+    state.isCatalogVisible = isView
+  },
+  setButtonShopingCarVisible (state, isVisible) {
+    state.isButtonShopingCarVisible = isVisible
+  },
+  validateTypeScreen (state) {
+      var cat = localStorage.getItem('currentSection');
+      if( !state.currentSection || state.currentSection === '' )
+      {
+     
+          alert(cat)
+          this.$router.push({
+              name: 'index'
+            })
+        }
+  }
 }

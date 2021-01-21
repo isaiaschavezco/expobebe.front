@@ -75,7 +75,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .contenedor-video {
   padding-bottom: 56.25%;
   height: 0;
@@ -86,7 +86,6 @@ export default {
 .frame {
   position: absolute;
   height: 95%;
-  margin-top: 5%;
   width: 100%;
   top: 0;
   left: 0;

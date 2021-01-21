@@ -8,12 +8,6 @@
       <div
         class="mb-5 w-full h-full flex justify-center items-center z relative extensor"
       >
-        <img
-          :src="require('@/assets/img/small/juguetilandia__notificación-720.png')"
-          alt=""
-          data-not-lazy
-          class="finished__img"
-        />
         <div class="w-9/12 absolute finished__text text-center z">
           <p class="text-white font-bold text-xl md:h-10 md:text-3xl lg:text-4xl">
             Dile a los reyes magos
@@ -54,7 +48,7 @@
 
 <script>
 import Modal from "../modal";
-import ButtonExit from "../ButtonExit";
+import ButtonExit from "@/components/layout/ButtonExit";
 import Boton from "../util/Boton";
 
 export default {

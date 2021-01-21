@@ -2,7 +2,7 @@
   <div
     v-if="isModalVisible"
     :class="opacity ? opacity : 'bg-opacity-50'"
-    class="h-screen w-screen bg-black z-2000 fixed top-0 left-0 z-20 flex justify-center items-center modal-component-blur"
+    class="h-screen w-screen bg-black fixed top-0 left-0 z-index-plus flex justify-center items-center modal-component-blur"
     @click="onModalClicked"
   >
     <slot />

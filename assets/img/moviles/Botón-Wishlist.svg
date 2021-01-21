@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="54" height="54" viewBox="0 0 54 54">
+  <defs>
+    <filter id="Elipse_4" x="0" y="0" width="54" height="54" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Botón-Wishlist" transform="translate(-1825 -13)">
+    <g transform="matrix(1, 0, 0, 1, 1825, 13)" filter="url(#Elipse_4)">
+      <circle id="Elipse_4-2" data-name="Elipse 4" cx="18" cy="18" r="18" transform="translate(9 6)" fill="#fff"/>
+    </g>
+    <g id="heart" transform="translate(1839 -8.525)">
+      <path id="Trazado_4" data-name="Trazado 4" d="M18.529,35.525a6.957,6.957,0,0,1,6.923,6.923c0,6.991-12.726,13.914-12.726,13.914S0,49.337,0,42.448a6.923,6.923,0,0,1,6.923-6.923h0a6.855,6.855,0,0,1,5.8,3.122A6.923,6.923,0,0,1,18.529,35.525Z" fill="#da90a1"/>
+    </g>
+  </g>
+</svg>

@@ -1,8 +1,13 @@
 <template>
-  <div class="custom-card-descubre flex-shrink rounded" @click="this.function">
-    <img class="mb-5 w-full p-5 lg:p-8" src="@/assets/img/all/calendar.svg" :alt="alt" />
+  <div
+    :class="colorCard ? colorCard : 'bg-white'"
+    class="custom-card-descubre flex-shrink rounded"
+    @click="this.function"
+  >
+    <img class="mb-5 w-full p-5 lg:p-8" :src="urlImage" :alt="alt" />
     <div
-      class="title-section border-top-right-radius text-white w-9/12 rounded text-2xl py-3 font-bold"
+      :class="colorButton ? colorButton : 'bg-bluenewborn'"
+      class="title-section border-top-right-radius text-white w-9/12 text-2xl py-3 font-bold"
       data-not-lazy
     >
       {{ title }}
@@ -17,7 +22,10 @@ export default {
     urlImage: String,
     alt: String,
     title: String,
+    colorButton: String,
+    colorCard: String,
   },
+
   methods: {},
 };
 </script>
@@ -55,7 +63,6 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: white;
   margin-top: 1rem;
   padding: 2rem;
   text-align: center;
@@ -67,7 +74,7 @@ export default {
 
 .title-section {
   position: absolute;
-  background-color: rgb(147, 203, 228);
+
   bottom: 0;
   left: 0;
   color: white;

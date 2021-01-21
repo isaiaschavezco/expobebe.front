@@ -31,6 +31,7 @@ import {
   MeshBasicMaterial,
   PlaneBufferGeometry,
 } from "three";
+import { NEWBORN, UNDER, PREGNED } from "../types/";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import { OutlinePass } from "three/examples/jsm/postprocessing/OutlinePass.js";
@@ -249,16 +250,31 @@ export default {
       if (intersects.length > 0) {
         // console.log('CLICK: ', intersects[0].object.name)
         if (intersects[0].object.name === "Descubre_Material_#25_0") {
+          localStorage.setItem("currentSection", NEWBORN);
+          this.$store.commit("menu/setCurrentSection", NEWBORN);
           this.$router.push({
-            name: "discoverpregned",
+            name: "newborn",
+            params: {
+              typeScreen: NEWBORN,
+            },
           });
         } else if (intersects[0].object.name === "Crea_Material_#25_0") {
+          localStorage.setItem("currentSection", UNDER);
+          this.$store.commit("menu/setCurrentSection", UNDER);
           this.$router.push({
-            name: "discoverunder",
+            name: "newborn",
+            params: {
+              typeScreen: UNDER,
+            },
           });
         } else if (intersects[0].object.name === "Juega_Material_#25_0") {
+          localStorage.setItem("currentSection", PREGNED);
+          this.$store.commit("menu/setCurrentSection", PREGNED);
           this.$router.push({
-            name: "discovernewborn",
+            name: "newborn",
+            params: {
+              typeScreen: PREGNED,
+            },
           });
         } else if (
           intersects[0].object.name === "Letrero_M_Atlas_0" ||

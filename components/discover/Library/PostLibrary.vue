@@ -1,22 +1,23 @@
 <template>
   <div
-    class="w-full mt-5 md:mt-0 border border-solid card h-48 md:h-64 shadow-lg"
+    :class="colorCard ? colorCard : 'bg-white'"
+    class="w-full mt-5 md:mt-0 border border-solid card card-rounded"
     @click="mostrarModal"
   >
     <div
-      class="relative mx-auto flex flex-col items-center justify-end card h-48 md:h-64 rounded-lg z-0"
+      class="relative mx-auto flex flex-col items-center justify-end card rounded-lg z-0 precarga"
     >
       <img
         :src="this.urlThumnail"
         :alt="title"
-        class="w-full imagen border-show"
+        class="w-full border-bottom-left-radius imagen border-show"
         v-lazy-load
         loading="lazy"
       />
       <div
-        class="absolute bottom-0 z-50 texto text-white w-full rounded text-base lg:text-base py-2 bg-yellowjugueti bg-opacity-50 text-left pl-5 font-bogle"
+        class="bottom-0 text-white w-full rounded text-base lg:text-base py-4 bg-opacity-50 text-left pl-5 font-bogle flex items-center"
       >
-        {{ title }}
+        <h3>{{ title }}</h3>
       </div>
       <!-- evita que se reproduzca el video -->
       <div class="absolute inset-0 cursor-pointer" />
@@ -30,15 +31,12 @@ export default {
     urlThumnail: String,
     urlVideo: String,
     title: String,
+    colorCard: String,
+    functionVideo: Function,
   },
   methods: {
     mostrarModal() {
-      // this.$store.commit('discover/setIsModalVideoLibraryVisible', true)
-      // this.$store.commit('discover/setCurrentModalVideoLibraryUrl', this.urlVideo)
-      this.$store.commit("discover/setIsModalVideoLibraryVisible", true);
-      this.$store.commit("discover/setCurrentModalVideoLibraryUrl", this.urlVideo);
-      this.$store.commit("discover/say", " #F5213A");
-      console.log("CLICK");
+      this.functionVideo(true, this.urlVideo, this.title);
     },
   },
 };
@@ -53,7 +51,7 @@ export default {
 }
 
 .card {
-  border-radius: 10pt;
+  border-radius: 30pt 30pt;
   max-height: 20rem;
   max-width: 20rem;
   overflow: hidden;
@@ -61,9 +59,6 @@ export default {
   justify-self: center;
 }
 
-.texto {
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
-}
 .borde-disimulado {
   border: solid 1px rgba(0, 0, 0, 0.0001);
 }
@@ -74,6 +69,9 @@ export default {
   margin-left: auto;
   margin-right: auto;
   filter: contrast(0.8);
+}
+.border-bottom-left-radius {
+  border-bottom-left-radius: 30pt 30pt;
 }
 
 @keyframes push {

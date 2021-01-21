@@ -6,12 +6,6 @@
         class="mb-5 z extensor w-full relative flex justify-center flex items-center flex-col"
         style="position: relative"
       >
-        <img
-          :src="require('@/assets/img/small/juguetilandia__notificación-720.png')"
-          class="modal-validation-image"
-          alt=""
-          data-not-lazy
-        />
         <div class="w-9/12 text-modal-confirmation text-center">
           <p class="text-white font-bold text-xl md:h-10 md:text-3xl lg:text-4xl">
             ¡Excelente!
@@ -43,7 +37,7 @@
 </template>
 
 <script>
-import ButtonExit from "../ButtonExit";
+import ButtonExit from "@/components/layout/ButtonExit";
 import Boton from "../util/Boton";
 
 export default {

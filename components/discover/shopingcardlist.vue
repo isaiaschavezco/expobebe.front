@@ -7,20 +7,22 @@
       class="relative h-full shadow-2xl w-screen flex flex-col bg-white rounded rounded-t-lg shopingList_container md:w-10/12 md:mx-auto mt-20 md:mt-12 overflow-hidden shadow-2xl"
     >
       {{/* ShopingCar HEADER */}}
-      <div class="relative text-yellowjugueti h-20 pt-16 flex justify-center items-end">
+      <div
+        :class="this.principalColor"
+        class="relative h-20 flex justify-center items-center"
+      >
         <button
-          class="absolute top-0 right-0 mt-8 mr-10 border font-bold h-6 w-6 flex items-center justify-center text-yellowjugueti shopingList_burguer-button border-yellow-500 rounded-full shadow-lg"
+          class="absolute top-0 right-0 mt-4 mr-10 font-bold h-6 w-6 flex items-center justify-center text-white shopingList_burguer-button"
           @click="onShopingCarButtonClick"
         >
           <p class="place-self-center">&times;</p>
         </button>
-        <div class="w-full">
-          <h2
-            class="pt-10 font-bold text-center text-lg sm:text-3xl lg:text-3xl shopingList_text w-full text-aquajugueti"
-          >
-            Mi carta a los reyes magos
-          </h2>
-        </div>
+
+        <h2
+          class="font-bold text-left text-lg sm:text-3xl ml-8 lg:text-2xl text-white shopingList_text w-full"
+        >
+          Mi wishlist
+        </h2>
       </div>
       {{/* ShopingCar LIST */}}
 
@@ -32,18 +34,24 @@
           class="w-full md:w-8/12 mx-auto h-screen flex justify-center items-center"
         >
           <div
-            class="text-center w-32 md:w-full flex flex-col justify-center items-center my-auto lg:text-2xl"
+            class="text-center text-graycorp w-32 md:w-full flex flex-col justify-center items-center my-auto lg:text-xl"
           >
-            <p class="text-aquajugueti shopingList_text block">Tu carta está vacia</p>
+            <p class="shopingList_text block mb-8">Tu wishlist está vacia</p>
             <img
-              :src="require('@/assets/img/all/cartofletterempty.svg')"
+              :src="require('@/assets/img/moviles/icon_add-wishlist.png')"
               class="shopingList_image mt-4"
               alt="icono de carrito de compras"
-              data-not-lazy
             />
-            <p class="text-aquajugueti mt-4 shopingList_text">
-              Puedes encontrar muchos juguetes en esta sección
+            <p class="mt-4 shopingList_text">
+              Puedes encontrar muchos productos en esta sección
             </p>
+            <button
+              v-if="listItems.length === 0"
+              type="button"
+              class="block text-lg bg-yellowjugueti w-2/6 text-white mt-2 md:mt-16 py-2 px-1 hover:bg-bluenewborn shadow-lg font-semibold hover:text-white hover:border-transparent rounded-2xl"
+            >
+              Seleccionar productos
+            </button>
           </div>
         </div>
         <div v-if="!loading">
@@ -70,7 +78,7 @@
 
 <script>
 import ShopingCarItem from "@/components/discover/shopingcaritem";
-import { NEWBORN ,PREGNED,UNDER} from '../../types/index'
+import { NEWBORN, PREGNED, UNDER } from "../../types/index";
 
 export default {
   components: {
@@ -82,16 +90,31 @@ export default {
       loading: false,
     };
   },
-  created() {
-    let path = this.$route.fullPath
-    this.section = path.includes("discovernewborn") ? NEWBORN : path.includes("discoverpregned") ? PREGNED : UNDER
+  props: {
+    colorCard: String,
+  },
 
-    
+  created() {
+    let path = this.$route.fullPath;
+    this.section = path.includes("newborn")
+      ? NEWBORN
+      : path.includes("pregned")
+      ? PREGNED
+      : UNDER;
   },
   computed: {
+    principalColor() {
+      let typeScreen = this.$store.state.menu.currentSection;
+      return typeScreen === NEWBORN
+        ? "bg-bluenewborn"
+        : typeScreen === UNDER
+        ? "bg-under"
+        : "bg-pregned";
+    },
     shopingCarListStatus() {
       return this.$store.state.shopinglist.isShopingCarListVisible;
     },
+
     animation() {
       if (this.shopingCarListStatus) {
         this.animationName = "animation_show";
@@ -128,8 +151,8 @@ export default {
 
 <style>
 .shopingList_container {
-  border-top-left-radius: 3.5rem;
-  border-top-right-radius: 3.5rem;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
 }
 
 .animation_show {
@@ -150,7 +173,6 @@ export default {
 
 .shopingList_image {
   width: 5rem;
-  height: 5rem;
 }
 
 .shopingList_text {
@@ -158,8 +180,7 @@ export default {
 }
 
 .shopingList_burguer-button {
-  border: 3px solid;
-  box-shadow: 2px 3px 1rem #00000029;
+  font-size: 2.5rem;
 }
 
 .shopingList_burguer-button:active {

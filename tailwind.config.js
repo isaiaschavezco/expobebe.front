@@ -20,10 +20,16 @@ module.exports = {
                     default: "#EB0045",
                     dark: "#d1003d"
                 },
-                blueformjugueti: {
-                    default: "#3CB4E5"
+                bluenewborn: {
+                    default: "rgb(218, 144, 161)"
                 },
-                grayjugueti: {
+                under: {
+                    default: "rgb(168, 168, 202)"
+                },
+                pregned: {
+                    default: " rgb(147, 203, 228)"
+                },
+                graycorp: {
                     default: "#707070"
                 },
                 aquajugueti: {
@@ -32,7 +38,7 @@ module.exports = {
                 geenjugueti: {
                     default: "#58B149"
                 },
-                yellowjugueti: {
+                yellowcorp: {
                     default: "#FFB71B"
                 }
             },
