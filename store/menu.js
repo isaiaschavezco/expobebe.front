@@ -26,11 +26,14 @@ export const mutations = {
     state.isButtonShopingCarVisible = isVisible
   },
   validateTypeScreen (state) {
-      var cat = localStorage.getItem('currentSection');
+    // if (localStorage) {
+    //   const cat = localStorage.getItem('currentSection');
+    //   state.currentSection = cat
+      
+    // }
+
       if( !state.currentSection || state.currentSection === '' )
       {
-     
-          alert(cat)
           this.$router.push({
               name: 'index'
             })

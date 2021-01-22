@@ -7,14 +7,18 @@
     >
       <h3 class="ml-8 lg:text-2xl font-semibold">{{ title }}</h3>
     </div>
-
-    <div class="lg:p-4 flex flex-col md:flex-row h-full">
-      <div class="w-full md:w-7/12 h-full">
+    <div class="lg:p-4 flex flex-wrap md:flex-row h-full">
+      <!-- Mitad derecha - Video -->
+      <!-- <div class="w-full xl:w-7/12 h-full bg-black"> -->
+      <div class="w-full xl:w-7/12 bg-black">
         <div class="contenedor-video precarga">
           <iframe :src="urlVideo" class="frame"></iframe>
         </div>
       </div>
-      <div class="w-full md:w-5/12 pl-8 box-border container__social-chat">
+
+      <!-- Mitad izquierda - chat -->
+      <!-- <div class="w-full xl:w-5/12 pl-8 bg-red-600 box-border container__social-chat"> -->
+      <div class="w-full xl:w-5/12 pl-8 bg-red-600 box-border">
         <Chat v-if="chat" :chat="chat" />
         <div class="flex mt-5">
           <input
@@ -92,7 +96,7 @@ input::after {
   border-radius: 13pt;
   margin: auto;
   margin-top: 5%;
-  height: 70%;
+  height: 95%;
 }
 @media screen and (max-width: 768px) {
   .modal_container {

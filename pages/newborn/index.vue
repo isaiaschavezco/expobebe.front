@@ -58,6 +58,8 @@ export default {
     },
   },
   created() {
+    this.$store.commit("menu/validateTypeScreen");
+
     this.typeScreen = this.$store.state.menu.currentSection;
     // alert(this.typeScreen)
     this.principalColor =

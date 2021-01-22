@@ -14,7 +14,7 @@ export default {
      ** See https://nuxtjs.org/api/configuration-head
      */
     head: {
-        title: process.env.npm_package_name || '',
+        title:  'Expo bebé',
         meta: [
             { charset: 'utf-8' },
             { name: 'viewport', content:'user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi, viewport-fit=cover'  },
@@ -61,27 +61,7 @@ export default {
         '@aceforth/nuxt-optimized-images',
         'nuxt-lazy-load',
         '@nuxtjs/auth',
-        '@nuxtjs/pwa', [
-            '@nuxtjs/firebase',
-            {
-                config: {
-                    apiKey: "AIzaSyDcUUn0uLlPIvVgBVO9fBafShjOeOPvU5k",
-                    authDomain: "mundo-juguetilandia-50db6.firebaseapp.com",
-                    databaseURL: "https://mundo-juguetilandia-50db6.firebaseio.com",
-                    projectId: "mundo-juguetilandia-50db6",
-                    storageBucket: "mundo-juguetilandia-50db6.appspot.com",
-                    messagingSenderId: "678472501618",
-                    appId: "1:678472501618:web:451eb759130b15e60df5eb",
-                    measurementId: "G-E1SR9ZGQ71"
-
-                },
-                services: {
-                    analytics: {
-                        collectionEnabled: true // default
-                    }
-                }
-            }
-        ]
+        
     ],
     /*
      ** Axios module configuration

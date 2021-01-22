@@ -194,6 +194,8 @@ export default {
   },
 
   async created() {
+    this.$store.commit("menu/validateTypeScreen");
+
     this.typeScreen = this.$store.state.menu.currentSection;
     const { data } = await this.$api.book.getAll(this.typeScreen);
     this.videos = data.result.books;

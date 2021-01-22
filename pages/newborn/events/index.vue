@@ -84,6 +84,8 @@ export default {
     }
   },
   created() {
+        this.$store.commit("menu/validateTypeScreen");
+
     this.typeScreen = this.$store.state.menu.currentSection;
     this.initDates()
     this.selectedMonth = this.actualDate.getMonth()

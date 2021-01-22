@@ -31,8 +31,7 @@ body {
 }
 
 .test-bg-blue {
-  background: url("https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/bg_toys.svg"),
-    url("https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/blue_bgtoys.png")
-      center repeat;
+  background: url("https://expobebe.fra1.digitaloceanspaces.com/plashscreen.png") center
+    repeat;
 }
 </style>

@@ -43,17 +43,12 @@ export default {
 </script>
 
 <style>
-.test-frame {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
 .card {
   border-radius: 30pt 30pt;
   max-height: 20rem;
   max-width: 20rem;
+  min-width: 10rem;
+  min-height: 10rem;
   overflow: hidden;
   align-self: center;
   justify-self: center;
@@ -68,23 +63,10 @@ export default {
   margin: auto;
   margin-left: auto;
   margin-right: auto;
+  object-fit: cover;
   filter: contrast(0.8);
 }
 .border-bottom-left-radius {
   border-bottom-left-radius: 30pt 30pt;
-}
-
-@keyframes push {
-  0% {
-    transform: scale(1);
-  }
-
-  60% {
-    transform: scale(0.1);
-  }
-
-  100% {
-    transform: scale(1);
-  }
 }
 </style>

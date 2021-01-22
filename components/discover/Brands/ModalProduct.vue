@@ -10,36 +10,34 @@
           {{ product.name.slice(0, 30) }}
         </h3>
       </div>
-      <div class="body_cardproduct w-100 flex flex-col md:flex-row">
-        <div class="md:h-full box-border h-50 w-full md:w-3/6 flex justify-center">
-          <div class="precarga card-rounded img_cardproduct overflow-hidden w-11/12">
-            <img class="object-cover h-full w-full box-border" :src="product.images[0]" />
+      <div
+        :class="this.show360 ? 'animation__modalproduct-show' : ''"
+        class="body_cardproduct w-100 flex flex-col md:flex-row"
+      >
+        <div
+          :class="this.show360 ? 'animation__modalproduct-show' : ''"
+          class="md:h-full box-border h-50 w-full md:w-3/6 flex justify-center"
+        >
+          <div class="precarga img_cardproduct overflow-hidden w-11/12">
+            <img
+              @click="onShow360"
+              class="object-contain cursor-pointer h-full w-full box-border"
+              :src="product.images[0]"
+            />
           </div>
         </div>
         <div
+          :class="this.show360 ? 'animation__hide' : ''"
           class="text__cardproduct text-xs md:text-sm lg:text-lg object-cover h-full box-border w-full md:w-2/6 mx-auto invisible-scrollbar overflow-y-scroll"
         >
           Al contrario del pensamiento popular, el texto de Lorem Ipsum no es simplemente
           texto aleatorio. Tiene sus raices en una pieza cl´sica de la literatura del
-          Latin, que data del año 45 antes de Cristo, haciendo que este adquiera mas de
-          2000 años de antiguedad. Richard McClintock, un profesor de Latin de la
-          Universidad de Hampden-Sydney en Virginia, encontró una de las palabras más
-          oscuras de la lengua del latín, "consecteur", en un pasaje de Lorem Ipsum, y al
-          seguir leyendo distintos textos del latín, descubrió la fuente indudable. Lorem
-          Ipsum viene de las secciones 1.10.32 y 1.10.33 de "de Finnibus Bonorum et
-          Malorum" (Los Extremos del Bien y El Mal) por Cicero, escrito en el año 45 antes
-          de Cristo. Este libro es un tratado de teoría de éticas, muy popular durante el
-          Renacimiento. La primera linea del Lorem Ipsum, "Lorem ipsum dolor sit amet..",
-          viene de una linea en la sección 1.10.32 El trozo de texto estándar de Lorem
-          Ipsum usado desde el año 1500 es reproducido debajo para aquellos interesados.
-          Las secciones 1.10.32 y 1.10.33 de "de Finibus Bonorum et Malorum" por Cicero
-          son también reproducidas en su forma original exacta, acompañadas por versiones
-          en Inglés de la traducción realizada en 1914 por H. Rackham.
           ----------------------------------
           {{ product.description.slice(0, 1000) }}
         </div>
       </div>
       <div
+        :class="this.show360 ? 'animation__hide' : ''"
         class="footer__cardproduct w-full flex justify-center md:justify-end items-center md:pr-20"
       >
         <button
@@ -71,8 +69,15 @@ export default {
     product: Object,
     closeFunction: Function,
   },
-  created() {
-    console.log(this.product, this.closeFunction);
+  data() {
+    return {
+      show360: false,
+    };
+  },
+  methods: {
+    onShow360() {
+      this.show360 = !this.show360;
+    },
   },
 };
 </script>
@@ -96,5 +101,34 @@ export default {
 }
 .img_cardproduct {
   height: 80%;
+  border-radius: 15pt;
+  -webkit-box-shadow: 0px 2px 20px -15px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 2px 20px -15px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 2px 20px -15px rgba(0, 0, 0, 0.75);
+}
+.animation__hide {
+  animation-name: hide;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+.animation__modalproduct-show {
+  animation-name: show;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+  border-radius: 10pt;
+}
+
+@keyframes hide {
+  100% {
+    width: 0;
+    height: 0;
+    opacity: 0;
+  }
+}
+@keyframes show {
+  100% {
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

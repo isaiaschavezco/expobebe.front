@@ -1,5 +1,5 @@
 <template>
-  <div class="px-5 lg:px-32 pt-5 h-full overflow-y-scroll">
+  <div class="px-5 pt-5 h-full w-full overflow-y-scroll">
     <ModalFinishedCart />
     <ModalSantaVideo v-if="isSantaVideoModalShown" />
     <ShopingCardList v-if="shopingCarListStatus" />
@@ -9,23 +9,23 @@
       :closeFunction="this.onCloseModal"
     />
 
-    <div v-if="!isPageLoading" class="flex flex-col items-center">
-      <div
-        class="grid grid-cols-2 md:grid-cols-4 gap-1 lg:gap-16 mt-10 px-1 pb-20 lg:grid-cols-4 scrollbar"
-      >
+    <div v-if="!isPageLoading" class="flex items-center justify-center w-full">
+      <div class="flex flex-wrap justify-center items-center mt-10 px-1 scrollbar">
         <div
           v-for="product in products"
           :key="product._id"
           :class="'bg-' + principalColor"
-          class="cursor-pointer card-brand overflow-hidden borde-disimulado imagen-brand-toy"
+          class="cursor-pointer card-brand overflow-hidden mt-5 md:ml-5 borde-disimulado imagen-brand-toy"
           @click="onTradeMarkClick(product)"
         >
-          <img
-            class="shadow-xl push-boton border-show imagen-j rounded-lg border-bottom-left-radius"
-            :src="product.images[0]"
-            alt=""
-            v-lazy-load
-          />
+          <div class="w-full h-full precarga">
+            <img
+              class="shadow-xl push-boton border-show imagen-j rounded-lg border-bottom-left-radius"
+              :src="product.images[0]"
+              alt=""
+              v-lazy-load
+            />
+          </div>
           <div
             class="text-left lg:px-3 text-sm md:text-lg lg:text-xl borde-disimulado font-semibold title-component-style"
           >
@@ -61,6 +61,8 @@ export default {
   },
 
   async created() {
+    this.$store.commit("menu/validateTypeScreen");
+
     let idTradeMark = this.$route.params.id;
     this.typeScreen = this.$store.state.menu.currentSection;
 
@@ -156,6 +158,9 @@ export default {
   -webkit-box-shadow: 0px 2px 29px -17px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 2px 29px -17px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 2px 29px -17px rgba(0, 0, 0, 0.75);
+  min-height: 15rem;
+  min-width: 20rem;
+  max-width: 18%;
 }
 .title-component-style {
   color: white;

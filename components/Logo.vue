@@ -1,6 +1,4 @@
-<template>
-  <img class="mx-auto NuxtLogo" :src="require('@/assets/img/logs.png')" alt="" />
-</template>
+<template></template>
 
 <style>
 .NuxtLogo {

@@ -2,7 +2,7 @@
   <div
     @click="functionClick(dataFunction)"
     :class="colorCard ? colorCard : 'bg-white'"
-    class="w-11/12 md:w-4/12 cursor-pointer ml-4 card-event place-self-center card-rounded overflow-hidden shadow-xl mb-5 mx-auto"
+    class="w-11/12 md:w-4/12 cursor-pointer ml-4 card-event place-self-center card-rounded overflow-hidden shadow-xl mb-5 mx-auto exp"
   >
     <div
       v-if="this.status === 'En vivo'"
@@ -10,7 +10,7 @@
     >
       En vivo
     </div>
-    <div class="h-3/5">
+    <div class="h-3/5 precarga card-event">
       <img
         class="w-full h-full border-bottom-left-radius"
         :src="this.urlImage"
@@ -49,6 +49,7 @@ export default {
 <style scoped>
 .card-event {
   min-width: 15rem;
+  min-height: 20rem;
 }
 .border-bottom-left-radius {
   border-bottom-left-radius: 30pt 30pt;
