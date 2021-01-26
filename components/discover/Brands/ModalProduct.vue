@@ -6,6 +6,7 @@
       :class="this.show360 ? 'card-product-360' : 'card-product'"
     >
       <BotonClose color="text-graycorp " :funcion="this.closeFunction" />
+
       <div class="header_cardproduct w-100 flex justify-left items-center">
         <h3 class="text-graycorp font-semibold text-lg ml-4">
           {{ product.name.slice(0, 30) }}
@@ -92,6 +93,7 @@ export default {
     this.$store.commit("shopinglist/existProduct", this.product._id);
     console.log("this.products", this.product);
   },
+
   mounted() {
     console.log(this.$store.state.shopinglist.existInCar);
     this.productExist = this.$store.state.shopinglist.existInCar;

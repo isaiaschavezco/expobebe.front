@@ -3,7 +3,7 @@
     <ModalListNames
       v-if="isCatalogView"
       :closeFunction="onCatalogClose"
-      title="Descargar catálogo"
+      title="Catálogo Walmart"
       :colorCard="headerColor"
     />
     <header class="fixed flex justify-around items-center pt-1" :class="headerColor">

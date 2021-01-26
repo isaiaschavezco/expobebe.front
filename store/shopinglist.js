@@ -62,6 +62,9 @@ export const mutations = {
       
       state.wishlist.listItems = []
        localStorage.removeItem('shopinglist');
+      const win = window.open(`https://vivirmejor.mx/universo-del-bebe/ebook-de-nombre-para-tu-bebe/?gender=${state.wishlist.gender}&email=${state.wishlist.email}`, "_blank");
+      // Cambiar el foco al nuevo tab (punto opcional)
+      win.focus();
  
     } catch (error) {
       console.log('Ocurrio un error', error)

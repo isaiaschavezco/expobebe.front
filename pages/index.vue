@@ -270,22 +270,22 @@ export default {
       this.logoButton = this.createSprite("./logo_universo.png");
       console.log("this.logoButton", this.logoButton);
       this.logoButton.position.set(50, 84, 2);
-      this.logoButton.scale.set(60, 60, 60);
+      this.logoButton.scale.set(60, 40, 0);
       this.logoButton.name = "logo";
 
       this.embarazoButton = this.createSprite("./botones/embarazo.png");
-      this.embarazoButton.scale.set(35, 35, 35);
+      this.embarazoButton.scale.set(35, 35, 0);
       this.embarazoButton.position.set(40, 27, -86);
       this.embarazoButton.name = "embarazo";
 
       this.postpartoButton = this.createSprite("./botones/postparto.png");
-      this.postpartoButton.scale.set(35, 35, 35);
+      this.postpartoButton.scale.set(35, 35, 0);
       this.postpartoButton.position.set(50, 34, 5);
       this.postpartoButton.name = "postparto";
       console.log("this.postpartoButton", this.postpartoButton);
 
       this.primerosButton = this.createSprite("./botones/primeros.png");
-      this.primerosButton.scale.set(35, 35, 35);
+      this.primerosButton.scale.set(35, 35, 0);
       this.primerosButton.position.set(40, 27, 86);
       this.primerosButton.name = "primeros";
 
