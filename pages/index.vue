@@ -169,8 +169,8 @@ export default {
       dracoLoader.setDecoderPath("gltf/");
       loader.setDRACOLoader(dracoLoader);
       loader.load("ciguena/Ciguena-Anim2.gltf", (gltf) => {
-        gltf.scene.position.set(200, 20, 100);
-        gltf.scene.rotation.set(0, -2.2, 0);
+        gltf.scene.position.set(198, 35, 75);
+        gltf.scene.rotation.set(0, -3.5, 0);
         this.ciguena = gltf.scene;
         console.log("gltf", gltf);
         mixerCiguena = new AnimationMixer(gltf.scene);
@@ -198,7 +198,7 @@ export default {
     init() {
       this.mainContainer = document.getElementById("main-container-juguetilandia");
       this.camera = new PerspectiveCamera(
-        80,
+        35,
         this.mainContainer.clientWidth / this.mainContainer.clientHeight,
         0.1,
         1000
@@ -223,27 +223,39 @@ export default {
 
       this.controls = new OrbitControls(this.camera, this.renderer.domElement);
       // this.controls.maxAzimuthAngle = Math.PI;
-      this.controls.minAzimuthAngle = 0;
+      this.controls.minAzimuthAngle = Math.PI;
+      this.controls.maxAzimuthAngle = 2 * Math.PI;
+      this.controls.maxPolarAngle = Math.PI / 2;
+      this.controls.minPolarAngle = Math.PI / 2;
       this.controls.enableDamping = true;
       this.controls.dampingFactor = 0.05;
       this.controls.rotateSpeed *= -0.2;
       this.controls.enableZoom = true;
+      // this.controls.maxDistance = 50;
+      this.controls.minDistance = 100;
 
-      const origin = new Vector3(0, 0, 0);
-      const length = 1;
-      const hex = 0xffff00;
-      this.centroControls = new Vector3(2, 0, 5).normalize();
-      this.arrowHelper = new ArrowHelper(this.centroControls, origin, length, hex);
-      this.scene.add(this.arrowHelper);
+      // const origin = new Vector3(0, 0, 0);
+      // const length = 1;
+      // const hex = 0xffff00;
+      this.camera.position.set(-180.5, 35, 0);
+      this.camera.position.y = 35;
 
+      this.centroControls = new Vector3(-140.5, 53, 0).normalize();
+      this.centroControls.y = 40;
       this.controls.target = this.centroControls;
+      this.camera.updateProjectionMatrix();
+      this.controls.update();
+
+      this.controls.update();
+
+      this.camera.updateProjectionMatrix();
+      // this.arrowHelper = new ArrowHelper(this.centroControls, origin, length, hex);
+      // this.scene.add(this.arrowHelper);
 
       // this.controls.maxDistance = 2;
       // this.controls.minDistance = 0;
 
-      this.camera.position.set(-4, 0, 0);
-      this.camera.rotation.set(0, 2000, 0);
-      console.log("CAMARA: ", this.camera);
+      // this.camera.rotation.set(0, 2000, 0);
 
       console.log("this.camera: ", this.camera);
       this.controls.update();
@@ -272,23 +284,23 @@ export default {
     principalButtons() {
       this.logoButton = this.createSprite("./logo_universo.png");
       console.log("this.logoButton", this.logoButton);
-      this.logoButton.position.set(-10, 4.7, -5);
-      this.logoButton.scale.set(6, 6, 6);
+      this.logoButton.position.set(50, 75, 2);
+      this.logoButton.scale.set(53, 53, 53);
       this.logoButton.name = "logo";
 
       this.embarazoButton = this.createSprite("./botones/embarazo.png");
-      this.embarazoButton.scale.set(6, 6, 6);
-      this.embarazoButton.position.set(11, 2, -8);
+      this.embarazoButton.scale.set(35, 35, 35);
+      this.embarazoButton.position.set(40, 27, -86);
       this.embarazoButton.name = "embarazo";
 
       this.postpartoButton = this.createSprite("./botones/postparto.png");
-      this.postpartoButton.scale.set(6, 6, 6);
-      this.postpartoButton.position.set(10, 2, 2);
+      this.postpartoButton.scale.set(35, 35, 35);
+      this.postpartoButton.position.set(50, 34, 5);
       this.postpartoButton.name = "postparto";
 
       this.primerosButton = this.createSprite("./botones/primeros.png");
-      this.primerosButton.scale.set(6, 6, 6);
-      this.primerosButton.position.set(11, 3, 15);
+      this.primerosButton.scale.set(35, 35, 35);
+      this.primerosButton.position.set(40, 27, 86);
       this.primerosButton.name = "primeros";
 
       this.scene.add(
@@ -362,17 +374,17 @@ export default {
       cameraFolder
         .add(options.camara, "z", -400, 400)
         .onChange((value) => changeZcamera(value));
-      //TARGET
+
       targetFolder
         .add(options.camaraCentro, "x", -400, 400)
         .onChange((value) => changeXtarget(value));
-      //bloqueo
-      targetFolder
-        .add(options.camaraCentro, "block", false)
-        .onChange((value) => blockCamera(value));
-      targetFolder
-        .add(options.camaraCentro, "block360", false)
-        .onChange((value) => blockCamera360(value));
+
+      // targetFolder
+      //   .add(options.camaraCentro, "block", false)
+      //   .onChange((value) => blockCamera(value));
+      // targetFolder
+      //   .add(options.camaraCentro, "block360", false)
+      //   .onChange((value) => blockCamera360(value));
 
       targetFolder
         .add(options.camaraCentro, "y", -400, 400)
@@ -456,24 +468,6 @@ export default {
         .add(options.pajarorotation, "scale", -300, 300)
         .onChange((value) => changeScaleLogo(value));
 
-      const blockCamera = (status) => {
-        if (status) {
-          this.controls.maxDistance = 4;
-          this.controls.minDistance = 0;
-        } else {
-          this.controls.maxDistance = 10000000;
-          this.controls.minDistance = 0;
-        }
-        this.controls.update();
-      };
-      const blockCamera360 = (status) => {
-        if (status) {
-          this.controls.maxAzimuthAngle = -1 * Math.PI;
-        } else {
-          this.controls.maxAzimuthAngle = Math.PI * 2;
-        }
-        this.controls.update();
-      };
       const changeFov = (fov) => {
         this.camera.fov = fov;
         this.camera.updateProjectionMatrix();
@@ -491,19 +485,16 @@ export default {
         this.centroControls.x = n;
         this.camera.updateProjectionMatrix();
         this.controls.update();
-        this.arrowHelper.setDirection(this.centroControls);
       };
       const changeYtarget = (n) => {
         this.centroControls.y = n;
         this.camera.updateProjectionMatrix();
         this.controls.update();
-        this.arrowHelper.setDirection(this.centroControls);
       };
       const changeZtarget = (n) => {
         this.centroControls.z = n;
         this.camera.updateProjectionMatrix();
         this.controls.update();
-        this.arrowHelper.setDirection(this.centroControls);
       };
 
       const changeXRcamera = (n) => {
