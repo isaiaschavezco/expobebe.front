@@ -74,6 +74,8 @@
               />
             </label>
           </div>
+          <p v-if="errorEmail" class="text-xs text-red-400">Ingrese un email válido.</p>
+          <p v-if="errorGender" class="text-xs text-red-400">Falta el campo género.</p>
         </div>
         <div class="flex justify-center w-full mt-5">
           <button
@@ -107,6 +109,12 @@ export default {
     Modal,
     ButtonExit,
     Boton,
+  },
+  data() {
+    return {
+      errorEmail: false,
+      errorGender: false,
+    };
   },
   created() {
     let path = this.$route.fullPath;
@@ -154,19 +162,34 @@ export default {
       let isFormValid = true;
       this.clearErroFields();
       if (this.$store.state.shopinglist.wishlist.email === "") {
-        alert("Falta el email");
+        this.errorEmail = true;
+        isFormValid = false;
+      }
+      if (!this.pruebaemail(this.$store.state.shopinglist.wishlist.email)) {
+        this.errorEmail = true;
         isFormValid = false;
       }
       if (this.$store.state.shopinglist.wishlist.gender === "") {
-        alert("Falta el género");
+        this.errorGender = true;
         isFormValid = false;
       }
       return isFormValid;
     },
-    clearErroFields() {
-      if (this.$refs.discover_letter_santa_name.classList.contains("error")) {
-        this.$refs.discover_letter_santa_name.classList.remove("error");
+    pruebaemail(valor) {
+      console.log("valor:", valor);
+      let is = false;
+      let re = /^([\da-z_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+      if (!re.exec(valor)) {
+        is = false;
+      } else {
+        is = true;
       }
+      console.log(is);
+      return is;
+    },
+    clearErroFields() {
+      this.errorEmail = false;
+      this.errorGender = false;
     },
   },
 };

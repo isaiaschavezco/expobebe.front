@@ -218,6 +218,7 @@ export default {
       );
       this.renderer.gammaFactor = 10;
       this.renderer.gammaOutput = true;
+      console.log("RENDERER", this.renderer);
       this.renderer.physicallyCorrectLights = true;
       this.mainContainer.appendChild(this.renderer.domElement);
 
@@ -231,33 +232,18 @@ export default {
       this.controls.dampingFactor = 0.05;
       this.controls.rotateSpeed *= -0.2;
       this.controls.enableZoom = true;
-      // this.controls.maxDistance = 50;
+      this.controls.maxDistance = 250;
       this.controls.minDistance = 100;
 
-      // const origin = new Vector3(0, 0, 0);
-      // const length = 1;
-      // const hex = 0xffff00;
       this.camera.position.set(-180.5, 35, 0);
       this.camera.position.y = 35;
 
       this.centroControls = new Vector3(-140.5, 53, 0).normalize();
       this.centroControls.y = 40;
       this.controls.target = this.centroControls;
-      this.camera.updateProjectionMatrix();
-      this.controls.update();
-
-      this.controls.update();
 
       this.camera.updateProjectionMatrix();
-      // this.arrowHelper = new ArrowHelper(this.centroControls, origin, length, hex);
-      // this.scene.add(this.arrowHelper);
-
-      // this.controls.maxDistance = 2;
-      // this.controls.minDistance = 0;
-
-      // this.camera.rotation.set(0, 2000, 0);
-
-      console.log("this.camera: ", this.camera);
+      this.camera.updateProjectionMatrix();
       this.controls.update();
 
       this.hemislight = new HemisphereLight(0xffffff, 0x080820, 5.5);
@@ -269,7 +255,6 @@ export default {
 
       // Composer
       this.composer = new EffectComposer(this.renderer);
-
       const renderPass = new RenderPass(this.scene, this.camera);
       this.composer.addPass(renderPass);
 
@@ -311,295 +296,6 @@ export default {
         this.primerosButton
       );
     },
-    controladores() {
-      const options = {
-        camara: {
-          fov: 80,
-          x: 2,
-          y: 0,
-          z: 0,
-        },
-        hemislight: {
-          intensity: 5.5,
-        },
-        pajaro: {
-          x: 2,
-          y: 0,
-          z: 0,
-        },
-        pajarorotation: {
-          x: 0,
-          y: -1,
-          z: 0,
-          scale: 0,
-        },
-        camararotation: {
-          x: 0,
-          y: -1,
-          z: 0,
-        },
-        camaraCentro: {
-          x: -1,
-          y: -1,
-          z: 1,
-          block: false,
-          block360: false,
-        },
-      };
-      const gui = new dat.GUI();
-
-      const materialFolder = gui.addFolder("Intensidad luz y fov cámara");
-      const cameraFolder = gui.addFolder("Posición cámara");
-      const targetFolder = gui.addFolder("Target centro de cámara");
-      const pajaroFolder = gui.addFolder("Posición pájaro");
-      const pajaroRFolder = gui.addFolder("Rotación pájaro");
-
-      const botonRojoFolder = gui.addFolder("Posición rojo");
-      const botonAzulFolder = gui.addFolder("Posición Azul");
-      const botonMoradoFolder = gui.addFolder("Posición Morado");
-      const botonLogo = gui.addFolder("Posición botonLogo");
-
-      materialFolder
-        .add(options.camara, "fov", 0.1, 400)
-        .onChange((value) => changeFov(value));
-      materialFolder
-        .add(options.hemislight, "intensity", 0.1, 10)
-        .onChange((value) => changeIntensity(value));
-
-      cameraFolder
-        .add(options.camara, "x", -400, 400)
-        .onChange((value) => changeXcamera(value));
-      cameraFolder
-        .add(options.camara, "y", -400, 400)
-        .onChange((value) => changeYcamera(value));
-      cameraFolder
-        .add(options.camara, "z", -400, 400)
-        .onChange((value) => changeZcamera(value));
-
-      targetFolder
-        .add(options.camaraCentro, "x", -400, 400)
-        .onChange((value) => changeXtarget(value));
-
-      // targetFolder
-      //   .add(options.camaraCentro, "block", false)
-      //   .onChange((value) => blockCamera(value));
-      // targetFolder
-      //   .add(options.camaraCentro, "block360", false)
-      //   .onChange((value) => blockCamera360(value));
-
-      targetFolder
-        .add(options.camaraCentro, "y", -400, 400)
-        .onChange((value) => changeYtarget(value));
-      targetFolder
-        .add(options.camaraCentro, "z", -400, 400)
-        .onChange((value) => changeZtarget(value));
-
-      pajaroFolder
-        .add(options.pajaro, "x", -500, 400)
-        .onChange((value) => changeXpajaro(value));
-      pajaroFolder
-        .add(options.pajaro, "y", -500, 400)
-        .onChange((value) => changeYpajaro(value));
-      pajaroFolder
-        .add(options.pajaro, "z", -500, 400)
-        .onChange((value) => changeZpajaro(value));
-      //rotacion pajaron
-      pajaroRFolder
-        .add(options.pajarorotation, "x", -400, 400)
-        .onChange((value) => changeXRpajaro(value));
-      pajaroRFolder
-        .add(options.pajarorotation, "y", -400, 400)
-        .onChange((value) => changeYRpajaro(value));
-      pajaroRFolder
-        .add(options.pajarorotation, "z", -400, 400)
-        .onChange((value) => changeZRpajaro(value));
-      pajaroRFolder
-        .add(options.pajarorotation, "scale", -300, 300)
-        .onChange((value) => changeScalepajaro(value));
-      //POSICIÓN Rojo
-      botonRojoFolder
-        .add(options.pajarorotation, "x", -300, 300)
-        .onChange((value) => changeXrojo(value));
-      botonRojoFolder
-        .add(options.pajarorotation, "y", -300, 300)
-        .onChange((value) => changeYrojo(value));
-      botonRojoFolder
-        .add(options.pajarorotation, "z", -300, 300)
-        .onChange((value) => changeZrojo(value));
-      botonRojoFolder
-        .add(options.pajarorotation, "scale", -30, 30)
-        .onChange((value) => changeScalerojo(value));
-      //POSICIÓN Morado
-      botonMoradoFolder
-        .add(options.pajarorotation, "x", -300, 300)
-        .onChange((value) => changeXmorado(value));
-      botonMoradoFolder
-        .add(options.pajarorotation, "y", -300, 300)
-        .onChange((value) => changeYmorado(value));
-      botonMoradoFolder
-        .add(options.pajarorotation, "z", -300, 300)
-        .onChange((value) => changeZmorado(value));
-      botonMoradoFolder
-        .add(options.pajarorotation, "scale", -300, 300)
-        .onChange((value) => changeScalemorado(value));
-      //POSICIÓN Azul
-      botonAzulFolder
-        .add(options.pajarorotation, "x", -300, 300)
-        .onChange((value) => changeXazul(value));
-      botonAzulFolder
-        .add(options.pajarorotation, "y", -300, 300)
-        .onChange((value) => changeYazul(value));
-      botonAzulFolder
-        .add(options.pajarorotation, "z", -300, 300)
-        .onChange((value) => changeZazul(value));
-      botonAzulFolder
-        .add(options.pajarorotation, "scale", -300, 300)
-        .onChange((value) => changeScaleazul(value));
-      //POSICIÓN logo
-      botonLogo
-        .add(options.pajarorotation, "x", -300, 300)
-        .onChange((value) => changeXlogo(value));
-      botonLogo
-        .add(options.pajarorotation, "y", -300, 300)
-        .onChange((value) => changeYlogo(value));
-      botonLogo
-        .add(options.pajarorotation, "z", -300, 300)
-        .onChange((value) => changeZlogo(value));
-      botonLogo
-        .add(options.pajarorotation, "scale", -300, 300)
-        .onChange((value) => changeScaleLogo(value));
-
-      const changeFov = (fov) => {
-        this.camera.fov = fov;
-        this.camera.updateProjectionMatrix();
-      };
-      const changeIntensity = (intensity) => {
-        this.hemislight.intensity = intensity;
-      };
-      const changeXcamera = (n) => {
-        this.camera.position.x = n;
-        this.camera.updateProjectionMatrix();
-        this.controls.update();
-      };
-      //TARGET
-      const changeXtarget = (n) => {
-        this.centroControls.x = n;
-        this.camera.updateProjectionMatrix();
-        this.controls.update();
-      };
-      const changeYtarget = (n) => {
-        this.centroControls.y = n;
-        this.camera.updateProjectionMatrix();
-        this.controls.update();
-      };
-      const changeZtarget = (n) => {
-        this.centroControls.z = n;
-        this.camera.updateProjectionMatrix();
-        this.controls.update();
-      };
-
-      const changeXRcamera = (n) => {
-        this.camera.rotation.x = n;
-        this.camera.updateProjectionMatrix();
-        this.controls.update();
-      };
-      const changeXpajaro = (n) => {
-        this.ciguena.position.x = n;
-      };
-      const changeXRpajaro = (n) => {
-        this.ciguena.rotation.x = n;
-      };
-      const changeYcamera = (n) => {
-        this.camera.position.y = n;
-        this.camera.updateProjectionMatrix();
-        this.controls.update();
-      };
-      const changeYRcamera = (n) => {
-        this.camera.rotation.y = n;
-        this.camera.updateProjectionMatrix();
-        this.controls.update();
-      };
-      const changeYpajaro = (n) => {
-        this.ciguena.position.y = n;
-      };
-      const changeScalepajaro = (n) => {
-        this.ciguena.scale.setScalar(n);
-      };
-      const changeYRpajaro = (n) => {
-        this.ciguena.rotation.y = n;
-      };
-      const changeZcamera = (n) => {
-        this.camera.position.z = n;
-        this.camera.updateProjectionMatrix();
-        this.controls.update();
-      };
-      const changeZRcamera = (n) => {
-        this.camera.rotation.z = n;
-        this.camera.updateProjectionMatrix();
-        this.controls.update();
-      };
-      const changeZpajaro = (n) => {
-        this.ciguena.position.z = n;
-      };
-      const changeZRpajaro = (n) => {
-        this.ciguena.rotation.z = n;
-      };
-      //Rojo
-      const changeXrojo = (n) => {
-        this.postpartoButton.position.x = n;
-      };
-      const changeYrojo = (n) => {
-        this.postpartoButton.position.y = n;
-      };
-      const changeZrojo = (n) => {
-        this.postpartoButton.position.z = n;
-      };
-      const changeScalerojo = (n) => {
-        console.log(this.postpartoButton);
-        console.log(this.postpartoButton.scale);
-        this.postpartoButton.scale.setScalar(n);
-        console.log(this.postpartoButton.scale);
-      };
-      //Morado
-      const changeXmorado = (n) => {
-        this.primerosButton.position.x = n;
-      };
-      const changeYmorado = (n) => {
-        this.primerosButton.position.y = n;
-      };
-      const changeZmorado = (n) => {
-        this.primerosButton.position.z = n;
-      };
-      const changeScalemorado = (n) => {
-        this.primerosButton.scale.setScalar(n);
-      };
-      //Azul
-      const changeXazul = (n) => {
-        this.embarazoButton.position.x = n;
-      };
-      const changeYazul = (n) => {
-        this.embarazoButton.position.y = n;
-      };
-      const changeZazul = (n) => {
-        this.embarazoButton.position.z = n;
-      };
-      const changeScaleazul = (n) => {
-        this.embarazoButton.scale.setScalar(n);
-      };
-      //Logo
-      const changeXlogo = (n) => {
-        this.logoButton.position.x = n;
-      };
-      const changeYlogo = (n) => {
-        this.logoButton.position.y = n;
-      };
-      const changeZlogo = (n) => {
-        this.logoButton.position.z = n;
-      };
-      const changeScaleLogo = (n) => {
-        this.logoButton.scale.setScalar(n);
-      };
-    },
 
     onResize() {
       this.renderer.setSize(
@@ -620,9 +316,7 @@ export default {
     },
     onInteractionEvent(event) {
       event.preventDefault();
-      // if (typeof scene !== "undefined") {
       this.raycaster.setFromCamera(this.mouseData, this.camera);
-      // calculate objects intersecting the picking ray
       const intersects = this.raycaster.intersectObjects(this.scene.children, true);
       if (intersects.length > 0) {
         console.log("CLICK: ", intersects[0].object);
@@ -665,7 +359,6 @@ export default {
           });
         }
       }
-      // }
     },
     onMouseMove(event) {
       event.preventDefault();
