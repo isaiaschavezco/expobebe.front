@@ -271,29 +271,40 @@ header {
     transform: scale(0.7);
   }
 }
-@keyframes shake {
-  0% {
-    margin-left: 0rem;
-  }
 
-  25% {
-    margin-left: 0.5rem;
-  }
-
-  75% {
-    margin-left: -0.5rem;
-  }
-
-  100% {
-    margin-left: 0rem;
-  }
-}
 @keyframes animatedBackground {
   from {
     opacity: 1;
   }
   to {
     opacity: 0.8;
+  }
+}
+
+.preloader {
+  width: 70px;
+  height: 70px;
+  border: 10px solid #eee;
+
+  border-radius: 50%;
+  animation-name: girar;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+@keyframes girar {
+  0% {
+    transform: rotate(0deg);
+    border-top: 10px solid rgb(168, 168, 202);
+  }
+  50% {
+    transform: rotate(180deg);
+    border-top: 10px solid rgb(147, 203, 228);
+  }
+  100% {
+    transform: rotate(360deg);
+    border-top: 10px solid rgb(218, 144, 161);
   }
 }
 </style>

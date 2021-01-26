@@ -1,7 +1,7 @@
 <template>
-  <div class="w-full bg-white message_chat box-border p-2 mt-1 md:mt-3">
-    <h3 class="text-xs font-semibold text-gray-700">Anónimo</h3>
-    <p class="text-xs text-gray-600">
+  <div class="w-full bg-white message_chat box-border p-1 xl:p-2 mt-1 md:mt-3">
+    <h3 class="message-title__chat text-xs font-semibold text-gray-700">usuario</h3>
+    <p class="message__chat text-xs text-gray-600">
       {{ mensaje.comment }}
     </p>
   </div>
@@ -30,7 +30,13 @@ export default {
   animation-iteration-count: 1;
   animation-duration: 1s;
 }
-.animation__chat-newmessage {
+@media screen and (max-width: 768px) {
+  .message__chat {
+    font-size: 0.6rem;
+  }
+  .message-title__chat {
+    font-size: 0.65rem;
+  }
 }
 
 @keyframes newmessage {

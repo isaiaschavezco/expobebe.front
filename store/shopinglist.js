@@ -3,26 +3,12 @@ export const state = () => ({
   isShopingCarListOk: false,
   isSantaVideoModalShown: false,
   isAddedCartModalShown: false,
+  existInCar: false,
   wishlist: {
     email: 'isaiaschavez.co@gmail.com',
     gender: 'female',
     listItems: [
-      {
-        _id: '6004764cbd346829284da1c3',
-        images: [
-          'https://sfo2.digitaloceanspaces.com/juguetilandia.media/event/images/trademarks/J218%20%281%20of%2035%29.jpg',
-          'https://sfo2.digitaloceanspaces.com/juguetilandia.media/event/images/trademarks/J218%20%281%20of%2035%29.jpg'
-        ],
-        name: 'Isaias'
-      },
-      {
-        _id: '6004764cbd346829284da1c3',
-        images: [
-          'https://sfo2.digitaloceanspaces.com/juguetilandia.media/event/images/trademarks/J218%20%281%20of%2035%29.jpg',
-          'https://sfo2.digitaloceanspaces.com/juguetilandia.media/event/images/trademarks/J218%20%281%20of%2035%29.jpg'
-        ],
-        name: 'Isaias'
-      }
+     
     ]
   }
 })
@@ -40,11 +26,14 @@ export const mutations = {
         }
       })
   },
-  async addItem (state, item) {
-      state.wishlist.listItems.push( item )  
-      state.isAddedCartModalShown = true
+  addItem (state, item) {
+    state.wishlist.listItems.push( item )  
+    state.existInCar = true
+    state.isAddedCartModalShown = true
+    console.log("state",state);
   },
-  async getWishList (state) {
+  async getWishList ( state ) {
+    
     return state.wishlist.listItems
   },
   async sendLetter (state,type) {
@@ -55,16 +44,27 @@ export const mutations = {
       state.wishlist.listItems.forEach(item => {
         newListItems.push(item._id)
       })
-      console.log(newListItems)
       data.listItems = newListItems
       const response = await this.$api.card.create(data,type)
-      alert("Correcto")
+      console.log( response );
+      this.existProduct = false
+      this.existProduct = false
+      state.wishlist.listItems = []
+        
     } catch (error) {
       console.log('Ocurrio un error', error)
     }
   },
 
-  async existProduct (state, id) {},
+  async existProduct (state, id) {
+   let exist = state.wishlist.listItems.find(item => item._id === id)
+   if(exist){
+     state.existInCar = true
+    } else
+    {
+     state.existInCar = false
+   }
+  },
   
   setIsVideoModalShown (state, status) {
     state.isSantaVideoModalShown = status

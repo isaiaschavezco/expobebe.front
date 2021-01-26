@@ -30,8 +30,14 @@ body {
   height: 100%;
 }
 
+@media screen and (min-width: 768px) {
+  .test-bg-blue {
+    background-size: contain;
+  }
+}
 .test-bg-blue {
-  background: url("https://expobebe.fra1.digitaloceanspaces.com/plashscreen.png") center
-    repeat;
+  background: url("https://expobebe.fra1.digitaloceanspaces.com/plashscreen.png");
+  background-size: cover;
+  background-position: center;
 }
 </style>

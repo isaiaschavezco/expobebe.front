@@ -30,6 +30,13 @@ import {
   TextureLoader,
   MeshBasicMaterial,
   PlaneBufferGeometry,
+  AxesHelper,
+  WebGLCubeRenderTarget,
+  MathUtils,
+  SpriteMaterial,
+  Sprite,
+  Vector3,
+  ArrowHelper
 } from "three";
 import { NEWBORN, UNDER, PREGNED } from "../types/";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -39,9 +46,13 @@ import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { GammaCorrectionShader } from "three/examples/jsm/shaders/GammaCorrectionShader";
 import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader";
+// import * as dat from "dat.gui";
+
 // import { GUI } from 'three/examples/jsm/libs/dat.gui.module.js'
 
 // Scene variables
+let mixerCiguena = null;
 let mixer = null;
 // const guiControls = new GUI()
 const clock = new Clock();
@@ -53,6 +64,7 @@ export default {
       renderer: null,
       camera: null,
       scene: null,
+      skybox: null,
       controls: null,
       raycaster: null,
       mouseData: new Vector2(),
@@ -68,12 +80,15 @@ export default {
     try {
       const { data } = await this.$api.event.getEvent360Meny(this.formatDate(new Date()));
       if (data.status.code === "0000") {
-        // console.log('EVENT RESPONSE: ', data)
         this.eventToShow = data.result.events[data.result.events.length - 1];
-        console.log("eventToShow: ", this.eventToShow);
         if (this.event3DObject) {
+          console.log("this.eventToShow", this.eventToShow);
           this.event3DObject.material.map = new TextureLoader().load(
             this.eventToShow.urlThumbnail
+          );
+        } else {
+          this.event3DObject.material.map = new TextureLoader().load(
+            "./logo_universo.png"
           );
         }
       }
@@ -82,89 +97,65 @@ export default {
     }
   },
   mounted() {
-    console.log("INICIO");
     this.init();
+    this.getBird();
+    this.getSky();
+    this.getScene();
+    this.principalButtons();
+    // this.controladores();
     this.animate();
   },
+  beforeDestroy: function () {
+    document.body.style.cursor = "auto";
+  },
   methods: {
-    init() {
-      console.log("INIT");
-      const mainContainer = document.getElementById("main-container-juguetilandia");
-
-      this.camera = new PerspectiveCamera(
-        75,
-        mainContainer.clientWidth / mainContainer.clientHeight,
-        0.1,
-        1000
-      );
-
-      this.scene = new Scene();
-      this.renderer = new WebGLRenderer({ antialias: true });
-      this.renderer.setSize(mainContainer.clientWidth, mainContainer.clientHeight);
-      this.renderer.setPixelRatio(
-        window.devicePixelRatio >= 2 ? 2 : window.devicePixelRatio
-      );
-      this.renderer.gammaFactor = 2.2;
-      this.renderer.gammaOutput = true;
-      this.renderer.physicallyCorrectLights = true;
-      mainContainer.appendChild(this.renderer.domElement);
-
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-      this.controls.maxAzimuthAngle = Math.PI;
-      this.controls.minAzimuthAngle = 0;
-      this.controls.enableDamping = true;
-      this.controls.dampingFactor = 0.05;
-      this.controls.rotateSpeed *= -0.2;
-      this.controls.enableZoom = true;
-      this.controls.maxDistance = 2;
-      this.controls.minDistance = 0;
-
+    getScene() {
+      const dracoLoader = new DRACOLoader();
+      dracoLoader.setDecoderPath("gltf/");
       const loader = new GLTFLoader();
-
-      // Load a glTF resource
+      loader.setDRACOLoader(dracoLoader);
       loader.load(
-        // resource URL
-        "https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/model/scene.gltf",
-        // called when the resource is loaded
+        "scene/scene.gltf",
         (gltf) => {
           gltf.scene.position.set(0, -33, 0);
+          gltf.scene.rotation.y = MathUtils.degToRad(-90);
+          // gltf.scene.position.y = -3
+
           mixer = new AnimationMixer(gltf.scene);
+          console.log("gltf todo:", gltf);
           const animation = mixer.clipAction(gltf.animations[0]);
-          // animation.setLoop(THREE.LoopRepeat);
           animation.play();
 
-          this.scene.add(gltf.scene);
+          
+          this.event3DObject = gltf.scene.getObjectByName(
+            "PantallaFade_MT_PantallaFade_0",
+            true
+          );
+          this.floor = gltf.scene.getObjectByName(
+            "Plano_Piso_Piso_Referencia_0",
+            true
+          );
+          this.floor.material.normalScale.set(12,12)
 
-          // console.log('gltf: ', gltf)
-          this.addSelectedObject(
-            gltf.scene.getObjectByName("Descubre_Material_#25_0", true)
-          );
-          this.addSelectedObject(gltf.scene.getObjectByName("Crea_Material_#25_0", true));
-          this.addSelectedObject(
-            gltf.scene.getObjectByName("Juega_Material_#25_0", true)
-          );
-          this.addSelectedObject(gltf.scene.getObjectByName("Letrero_M_Atlas_0", true));
-          this.outlinePass.selectedObjects = this.selectedObject;
+          console.log("this.event3DObject: ", this.event3DObject);
+          if (this.eventToShow) {
+            console.log(this.eventToShow);
+            this.event3DObject.material.map = new TextureLoader().load(
+              this.eventToShow.urlThumbnail
+            );
+          } else {
+            this.event3DObject.material.map = new TextureLoader().load(
+              "./logo_universo.png"
+            );
+          }
+
+          this.scene.add(gltf.scene);
           document
             .getElementById("loading-container-juguetilandia")
             .classList.remove("flex");
           document
             .getElementById("loading-container-juguetilandia")
             .classList.add("hidden");
-          gltf.scene.getObjectByName(
-            "Notificacion_Notificacion_0",
-            true
-          ).material.visible = false;
-          this.event3DObject = gltf.scene.getObjectByName("Evento_Evento_0", true);
-          // console.log('this.event3DObject: ', this.event3DObject)
-          if (this.eventToShow) {
-            this.event3DObject.material.map = new TextureLoader().load(
-              this.eventToShow.urlThumbnail
-            );
-          }
-          // Notificacion_Notificacion_0
-          // document.getElementById('main-container-juguetilandia').classList.remove('hidden')
-          // document.getElementById('main-container-juguetilandia').classList.add('block')
         },
         function (xhr) {
           console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
@@ -173,28 +164,95 @@ export default {
           console.log("An error happened", error);
         }
       );
-
-      const geometry = new PlaneBufferGeometry(0.25, 0.25);
-      const material = new MeshBasicMaterial({
-        color: 0xffffff,
-        transparent: true,
-        map: new TextureLoader().load(
-          "https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/arrastrar_.svg"
-        ),
+    },
+    getBird() {
+      const loader = new GLTFLoader();
+      const dracoLoader = new DRACOLoader();
+      dracoLoader.setDecoderPath("gltf/");
+      loader.setDRACOLoader(dracoLoader);
+      loader.load("ciguena/Ciguena-Anim2.gltf", (gltf) => {
+        gltf.scene.position.set(200, 20,100);
+        gltf.scene.rotation.set(0, -2.2, 0);
+        this.ciguena = gltf.scene;
+        console.log("gltf", gltf);
+        mixerCiguena = new AnimationMixer(gltf.scene);
+        const animation = mixerCiguena.clipAction(gltf.animations[0]);
+        animation.play();
+        this.scene.add(gltf.scene);
       });
-      this.planeSVG = new Mesh(geometry, material);
-      this.planeSVG.rotation.set(0, Math.PI / 2, 0);
-      this.planeSVG.position.set(0, -1, 0);
-      this.scene.add(this.planeSVG);
+    },
 
-      this.camera.position.set(2, 0, 0);
+    getSky() {
+      const loader = new TextureLoader();
+      const texture = loader.load("./background.png", () => {
+        const rt = new WebGLCubeRenderTarget(texture.image.height);
+        rt.fromEquirectangularTexture(this.renderer, texture);
+        this.scene.background = rt;
+      });
+    },
+    createSprite(url) {
+      const map = new TextureLoader().load(url);
+      const material = new SpriteMaterial({ map: map });
+      const sprite = new Sprite(material);
+      return sprite;
+    },
+
+    init() {
+      this.mainContainer = document.getElementById("main-container-juguetilandia");
+      this.camera = new PerspectiveCamera(
+        80,
+        this.mainContainer.clientWidth / this.mainContainer.clientHeight,
+        0.1,
+        1000
+      );
+      this.scene = new Scene();
+    
+      // const axesHelper = new AxesHelper(50);
+      // this.scene.add(axesHelper);
+      this.renderer = new WebGLRenderer({ antialias: true });
+      
+      this.renderer.setSize(
+        this.mainContainer.clientWidth,
+        this.mainContainer.clientHeight
+      );
+      this.renderer.setPixelRatio(
+        window.devicePixelRatio >= 2 ? 2 : window.devicePixelRatio
+      );
+      this.renderer.gammaFactor = 2.2;
+      this.renderer.gammaOutput = true;
+      this.renderer.physicallyCorrectLights = true;
+      this.mainContainer.appendChild(this.renderer.domElement);
+
+      this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+      // this.controls.maxAzimuthAngle = Math.PI;
+      this.controls.minAzimuthAngle = 0;
+      this.controls.enableDamping = true;
+      this.controls.dampingFactor = 0.05;
+      this.controls.rotateSpeed *= -0.2;
+      this.controls.enableZoom = true;
+
+  const origin = new Vector3( 0, 0, 0 );
+  const length = 1;
+const hex = 0xffff00;
+      this.centroControls = new Vector3( 2, 0, 5 ).normalize();
+  this.arrowHelper = new ArrowHelper( this.centroControls, origin, length, hex );
+this.scene.add( this.arrowHelper );
+
+      this.controls.target = this.centroControls 
+
+      // this.controls.maxDistance = 2;
+      // this.controls.minDistance = 0;
+
+      this.camera.position.set(-4, 0, 0);
+      this.camera.rotation.set(0, 2000, 0);
+      console.log("CAMARA: ", this.camera);
+
+      console.log("this.camera: ", this.camera);
       this.controls.update();
 
-      const ambienLight = new AmbientLight(0xe8e8e8, 1.3);
-      this.scene.add(ambienLight);
-
-      const hemislight = new HemisphereLight(0xffffff, 0x080820, 5.5);
-      this.scene.add(hemislight);
+      this.hemislight = new HemisphereLight(0xffffff, 0x080820, 5.5);
+      this.scene.add(this.hemislight);
+      console.log("this.hemislight:", this.hemislight);
 
       // Raycast
       this.raycaster = new Raycaster();
@@ -205,40 +263,384 @@ export default {
       const renderPass = new RenderPass(this.scene, this.camera);
       this.composer.addPass(renderPass);
 
-      // Outline
-      this.outlinePass = new OutlinePass(
-        new Vector2(mainContainer.clientWidth, mainContainer.clientHeight),
-        this.scene,
-        this.camera
+    
+
+      this.mainContainer.addEventListener("mousemove", this.onMouseMove, false);
+      this.mainContainer.addEventListener("click", this.onInteractionEvent, false);
+      this.mainContainer.addEventListener("touchstart", this.onTouchInteraction, false);
+      window.addEventListener("resize", () => {
+        this.onResize();
+      });
+    },
+
+    principalButtons() {
+      this.logoButton = this.createSprite("./logo_universo.png");
+      console.log("this.logoButton", this.logoButton);
+      this.logoButton.position.set(-10, 4.7, -5);
+      this.logoButton.scale.set(6, 6, 6);
+      this.logoButton.name = "logo";
+
+      this.embarazoButton = this.createSprite("./botones/embarazo.png");
+      this.embarazoButton.scale.set(6, 6, 6);
+      this.embarazoButton.position.set(11, 2, -8);
+      this.embarazoButton.name = "embarazo";
+
+      this.postpartoButton = this.createSprite("./botones/postparto.png");
+      this.postpartoButton.scale.set(6, 6, 6);
+      this.postpartoButton.position.set(10, 2, 2);
+      this.postpartoButton.name = "postparto";
+
+      this.primerosButton = this.createSprite("./botones/primeros.png");
+      this.primerosButton.scale.set(6, 6, 6);
+      this.primerosButton.position.set(11, 3, 15);
+      this.primerosButton.name = "primeros";
+
+      this.scene.add(
+        this.logoButton,
+        this.embarazoButton,
+        this.postpartoButton,
+        this.primerosButton
       );
-      this.outlinePass.edgeStrength = Number(10);
-      this.outlinePass.edgeGlow = Number(0.8);
-      this.outlinePass.edgeThickness = Number(1);
-      this.outlinePass.pulsePeriod = Number(5);
-      this.outlinePass.visibleEdgeColor.set("#ffffff");
-      this.outlinePass.hiddenEdgeColor.set("#000000");
-      this.composer.addPass(this.outlinePass);
+    },
+    controladores() {
+      const options = {
+        camara: {
+          fov: 80,
+          x: 2,
+          y: 0,
+          z: 0,
+        },
+        hemislight: {
+          intensity: 5.5,
+        },
+        pajaro: {
+          x: 2,
+          y: 0,
+          z: 0,
+        },
+        pajarorotation: {
+          x: 0,
+          y: -1,
+          z: 0,
+          scale: 0,
+        },
+        camararotation: {
+          x: 0,
+          y: -1,
+          z: 0,
+        },
+        camaraCentro: {
+          x: -1,
+          y: -1,
+          z: 1,
+          block: false,
+          block360: false,
+        },
+      };
+      const gui = new dat.GUI();
 
-      this.composer.addPass(new ShaderPass(GammaCorrectionShader));
+      const materialFolder = gui.addFolder("Intensidad luz y fov cámara");
+      const cameraFolder = gui.addFolder("Posición cámara");
+      const targetFolder = gui.addFolder("Target centro de cámara");
+      const pajaroFolder = gui.addFolder("Posición pájaro");
+      const pajaroRFolder = gui.addFolder("Rotación pájaro");
 
-      mainContainer.addEventListener("mousemove", this.onMouseMove, false);
-      mainContainer.addEventListener("click", this.onInteractionEvent, false);
-      mainContainer.addEventListener("touchstart", this.onTouchInteraction, false);
+      const botonRojoFolder = gui.addFolder("Posición rojo");
+      const botonAzulFolder = gui.addFolder("Posición Azul");
+      const botonMoradoFolder = gui.addFolder("Posición Morado");
+      const botonLogo = gui.addFolder("Posición botonLogo");
+
+      materialFolder
+        .add(options.camara, "fov", 0.1, 400)
+        .onChange((value) => changeFov(value));
+      materialFolder
+        .add(options.hemislight, "intensity", 0.1, 10)
+        .onChange((value) => changeIntensity(value));
+
+      cameraFolder
+        .add(options.camara, "x", -400, 400)
+        .onChange((value) => changeXcamera(value));
+      cameraFolder
+        .add(options.camara, "y", -400, 400)
+        .onChange((value) => changeYcamera(value));
+      cameraFolder
+        .add(options.camara, "z", -400, 400)
+        .onChange((value) => changeZcamera(value));
+        //TARGET
+      targetFolder
+        .add(options.camaraCentro, "x", -400, 400)
+        .onChange((value) => changeXtarget(value));
+        //bloqueo
+      targetFolder
+        .add(options.camaraCentro, "block", false)
+        .onChange((value) => blockCamera(value));
+      targetFolder
+        .add(options.camaraCentro, "block360", false)
+        .onChange((value) => blockCamera360(value));
+
+
+
+      targetFolder
+        .add(options.camaraCentro, "y", -400, 400)
+        .onChange((value) => changeYtarget(value));
+      targetFolder
+        .add(options.camaraCentro, "z", -400, 400)
+        .onChange((value) => changeZtarget(value));
+
+
+      pajaroFolder
+        .add(options.pajaro, "x", -500, 400)
+        .onChange((value) => changeXpajaro(value));
+      pajaroFolder
+        .add(options.pajaro, "y", -500, 400)
+        .onChange((value) => changeYpajaro(value));
+      pajaroFolder
+        .add(options.pajaro, "z", -500, 400)
+        .onChange((value) => changeZpajaro(value));
+      //rotacion pajaron
+      pajaroRFolder
+        .add(options.pajarorotation, "x", -400, 400)
+        .onChange((value) => changeXRpajaro(value));
+      pajaroRFolder
+        .add(options.pajarorotation, "y", -400, 400)
+        .onChange((value) => changeYRpajaro(value));
+      pajaroRFolder
+        .add(options.pajarorotation, "z", -400, 400)
+        .onChange((value) => changeZRpajaro(value));
+      pajaroRFolder
+        .add(options.pajarorotation, "scale", -300, 300)
+        .onChange((value) => changeScalepajaro(value));
+      //POSICIÓN Rojo
+      botonRojoFolder
+        .add(options.pajarorotation, "x", -300, 300)
+        .onChange((value) => changeXrojo(value));
+      botonRojoFolder
+        .add(options.pajarorotation, "y", -300, 300)
+        .onChange((value) => changeYrojo(value));
+      botonRojoFolder
+        .add(options.pajarorotation, "z", -300, 300)
+        .onChange((value) => changeZrojo(value));
+      botonRojoFolder
+        .add(options.pajarorotation, "scale", -30, 30)
+        .onChange((value) => changeScalerojo(value));
+      //POSICIÓN Morado
+      botonMoradoFolder
+        .add(options.pajarorotation, "x", -300, 300)
+        .onChange((value) => changeXmorado(value));
+      botonMoradoFolder
+        .add(options.pajarorotation, "y", -300, 300)
+        .onChange((value) => changeYmorado(value));
+      botonMoradoFolder
+        .add(options.pajarorotation, "z", -300, 300)
+        .onChange((value) => changeZmorado(value));
+      botonMoradoFolder
+        .add(options.pajarorotation, "scale", -300, 300)
+        .onChange((value) => changeScalemorado(value));
+      //POSICIÓN Azul
+      botonAzulFolder
+        .add(options.pajarorotation, "x", -300, 300)
+        .onChange((value) => changeXazul(value));
+      botonAzulFolder
+        .add(options.pajarorotation, "y", -300, 300)
+        .onChange((value) => changeYazul(value));
+      botonAzulFolder
+        .add(options.pajarorotation, "z", -300, 300)
+        .onChange((value) => changeZazul(value));
+      botonAzulFolder
+        .add(options.pajarorotation, "scale", -300, 300)
+        .onChange((value) => changeScaleazul(value));
+      //POSICIÓN logo
+      botonLogo
+        .add(options.pajarorotation, "x", -300, 300)
+        .onChange((value) => changeXlogo(value));
+      botonLogo
+        .add(options.pajarorotation, "y", -300, 300)
+        .onChange((value) => changeYlogo(value));
+      botonLogo
+        .add(options.pajarorotation, "z", -300, 300)
+        .onChange((value) => changeZlogo(value));
+      botonLogo
+        .add(options.pajarorotation, "scale", -300, 300)
+        .onChange((value) => changeScaleLogo(value));
+
+      const blockCamera = (status) => {
+        if(status){
+          this.controls.maxDistance = 4;
+          this.controls.minDistance = 0;
+        }else{
+
+        this.controls.maxDistance = 10000000;
+          this.controls.minDistance = 0;
+        }
+              this.controls.update();
+
+
+      };
+      const blockCamera360 = (status) => {
+        if (status) {
+                this.controls.maxAzimuthAngle = -1 * Math.PI;
+        }else{
+                this.controls.maxAzimuthAngle = Math.PI*2;
+        }
+              this.controls.update();
+              
+
+      };
+      const changeFov = (fov) => {
+        this.camera.fov = fov;
+        this.camera.updateProjectionMatrix();
+      };
+      const changeIntensity = (intensity) => {
+        this.hemislight.intensity = intensity;
+      };
+      const changeXcamera = (n) => {
+        this.camera.position.x = n;
+        this.camera.updateProjectionMatrix();
+        this.controls.update();
+      };
+      //TARGET
+      const changeXtarget = (n) => {
+        this.centroControls.x = n;
+        this.camera.updateProjectionMatrix();
+        this.controls.update();
+        this.arrowHelper.setDirection(this.centroControls)
+      };
+      const changeYtarget = (n) => {
+        this.centroControls.y = n;
+        this.camera.updateProjectionMatrix();
+        this.controls.update();
+        this.arrowHelper.setDirection(this.centroControls)
+      };
+      const changeZtarget = (n) => {
+        this.centroControls.z = n;
+        this.camera.updateProjectionMatrix();
+        this.controls.update();
+        this.arrowHelper.setDirection(this.centroControls)
+      };
+
+
+
+
+
+      const changeXRcamera = (n) => {
+        this.camera.rotation.x = n;
+        this.camera.updateProjectionMatrix();
+        this.controls.update();
+      };
+      const changeXpajaro = (n) => {
+        this.ciguena.position.x = n;
+      };
+      const changeXRpajaro = (n) => {
+        this.ciguena.rotation.x = n;
+      };
+      const changeYcamera = (n) => {
+        this.camera.position.y = n;
+        this.camera.updateProjectionMatrix();
+        this.controls.update();
+      };
+      const changeYRcamera = (n) => {
+        this.camera.rotation.y = n;
+        this.camera.updateProjectionMatrix();
+        this.controls.update();
+      };
+      const changeYpajaro = (n) => {
+        this.ciguena.position.y = n;
+      };
+      const changeScalepajaro = (n) => {
+        this.ciguena.scale.setScalar(n);
+      };
+      const changeYRpajaro = (n) => {
+        this.ciguena.rotation.y = n;
+      };
+      const changeZcamera = (n) => {
+        this.camera.position.z = n;
+        this.camera.updateProjectionMatrix();
+        this.controls.update();
+      };
+      const changeZRcamera = (n) => {
+        this.camera.rotation.z = n;
+        this.camera.updateProjectionMatrix();
+        this.controls.update();
+      };
+      const changeZpajaro = (n) => {
+        this.ciguena.position.z = n;
+      };
+      const changeZRpajaro = (n) => {
+        this.ciguena.rotation.z = n;
+      };
+      //Rojo
+      const changeXrojo = (n) => {
+        this.postpartoButton.position.x = n;
+      };
+      const changeYrojo = (n) => {
+        this.postpartoButton.position.y = n;
+      };
+      const changeZrojo = (n) => {
+        this.postpartoButton.position.z = n;
+      };
+      const changeScalerojo = (n) => {
+        console.log(this.postpartoButton)
+        console.log(this.postpartoButton.scale)
+        this.postpartoButton.scale.setScalar(n);
+        console.log(this.postpartoButton.scale)
+
+      };
+      //Morado
+      const changeXmorado = (n) => {
+        this.primerosButton.position.x = n;
+      };
+      const changeYmorado = (n) => {
+        this.primerosButton.position.y = n;
+      };
+      const changeZmorado = (n) => {
+        this.primerosButton.position.z = n;
+      };
+      const changeScalemorado = (n) => {
+        this.primerosButton.scale.setScalar(n) ;
+      };
+      //Azul
+      const changeXazul = (n) => {
+        this.embarazoButton.position.x = n;
+      };
+      const changeYazul = (n) => {
+        this.embarazoButton.position.y = n;
+      };
+      const changeZazul = (n) => {
+        this.embarazoButton.position.z = n;
+      };
+      const changeScaleazul = (n) => {
+        this.embarazoButton.scale.setScalar(n)
+      };
+      //Logo
+      const changeXlogo = (n) => {
+        this.logoButton.position.x = n;
+      };
+      const changeYlogo = (n) => {
+        this.logoButton.position.y = n;
+      };
+      const changeZlogo = (n) => {
+        this.logoButton.position.z = n;
+      };
+      const changeScaleLogo = (n) => {
+        this.logoButton.scale.setScalar(n)
+      };
+    },
+
+    onResize() {
+      this.renderer.setSize(
+        this.mainContainer.clientWidth,
+        this.mainContainer.clientHeight
+      );
+      this.camera.aspect =
+        this.mainContainer.clientWidth / this.mainContainer.clientHeight;
+      this.camera.updateProjectionMatrix();
     },
     animate() {
-      // console.log('ANIMATE')
       requestAnimationFrame(this.animate);
-      // cube.rotation.x += 0.01;
-      // cube.rotation.y += 0.01;
       const delta = clock.getDelta();
-      if (mixer) {
-        mixer.update(delta);
-      }
+      mixerCiguena && mixerCiguena.update(delta);
+      mixer && mixer.update(delta);
       this.controls.update();
-      if (this.planeSVG) {
-        this.planeSVG.quaternion.copy(this.camera.quaternion);
-      }
-      // this.renderer.render(this.scene, this.camera)
       this.composer.render();
     },
     onInteractionEvent(event) {
@@ -248,8 +650,8 @@ export default {
       // calculate objects intersecting the picking ray
       const intersects = this.raycaster.intersectObjects(this.scene.children, true);
       if (intersects.length > 0) {
-        // console.log('CLICK: ', intersects[0].object.name)
-        if (intersects[0].object.name === "Descubre_Material_#25_0") {
+        console.log("CLICK: ", intersects[0].object);
+        if (intersects[0].object.name === "postparto") {
           localStorage.setItem("currentSection", NEWBORN);
           this.$store.commit("menu/setCurrentSection", NEWBORN);
           this.$router.push({
@@ -258,7 +660,7 @@ export default {
               typeScreen: NEWBORN,
             },
           });
-        } else if (intersects[0].object.name === "Crea_Material_#25_0") {
+        } else if (intersects[0].object.name === "primeros") {
           localStorage.setItem("currentSection", UNDER);
           this.$store.commit("menu/setCurrentSection", UNDER);
           this.$router.push({
@@ -267,7 +669,7 @@ export default {
               typeScreen: UNDER,
             },
           });
-        } else if (intersects[0].object.name === "Juega_Material_#25_0") {
+        } else if (intersects[0].object.name === "embarazo") {
           localStorage.setItem("currentSection", PREGNED);
           this.$store.commit("menu/setCurrentSection", PREGNED);
           this.$router.push({
@@ -281,7 +683,7 @@ export default {
           intersects[0].object.name === "Evento_Evento_0"
         ) {
           this.$router.push({
-            name: "discover-events-id",
+            name: "newborn  -events-id",
             params: {
               id: this.eventToShow._id,
             },
@@ -294,9 +696,28 @@ export default {
       event.preventDefault();
       this.mouseData.x = (event.clientX / window.innerWidth) * 2 - 1;
       this.mouseData.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+      this.raycaster.setFromCamera(this.mouseData, this.camera);
+      // calculate objects intersecting the picking ray
+      const intersects = this.raycaster.intersectObjects(this.scene.children, true);
+      if (intersects.length > 0) {
+        if (intersects[0].object.name === "postparto") {
+          document.body.style.cursor = "pointer";
+        } else if (intersects[0].object.name === "primeros") {
+          document.body.style.cursor = "pointer";
+        } else if (intersects[0].object.name === "embarazo") {
+          document.body.style.cursor = "pointer";
+        } else if (
+          intersects[0].object.name === "Letrero_M_Atlas_0" ||
+          intersects[0].object.name === "Evento_Evento_0"
+        ) {
+          document.body.style.cursor = "pointer";
+        } else {
+          document.body.style.cursor = "auto";
+        }
+      }
     },
     onTouchInteraction(event) {
-      console.log("TOUCHSTART");
       this.mouseData.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
       this.mouseData.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
       this.onInteractionEvent(event);

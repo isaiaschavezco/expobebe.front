@@ -2,7 +2,7 @@
   <div
     v-if="chat"
     id="chat"
-    class="chat__container w-full flex flex-col items-center pt-5 overflow-y-scroll invisible-scrollbar bg-gray-100 p-2"
+    class="chat__container w-full flex flex-col items-center pt-5 overflow-y-scroll invisible-scrollbar bg-gray-100 p-1 xl:p-2"
   >
     <Message
       v-for="message in mensajesInvertidos"
@@ -35,9 +35,16 @@ export default {
 <style>
 .chat__container {
   height: 70%;
-  max-height: 60%;
-
+  max-height: 70%;
   overflow-y: scroll;
   border-radius: 10pt;
+}
+
+@media screen and (max-width: 1200px) {
+  .chat__container {
+    border-radius: 0pt;
+    height: 50%;
+    max-height: 50%;
+  }
 }
 </style>

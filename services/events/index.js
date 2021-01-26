@@ -11,6 +11,7 @@ export default http => ({
   getByDatesRange (lowerDate, greaterDate,type) {
     const resource = type === NEWBORN ?  resourceNewBorn : type === PREGNED ?  resourcePregned :  resourceUnder
     return http.get(`${resource}/pagination/1?limit=10000&status=CREATED&greaterDate=${greaterDate}&lowerDate=${lowerDate}`)
+    console.log("lowerDate, greaterDate,type",lowerDate, greaterDate,type)
   },
   getAll (type) {
     const resource = type === NEWBORN ?  resourceNewBorn : type === PREGNED ?  resourcePregned :  resourceUnder

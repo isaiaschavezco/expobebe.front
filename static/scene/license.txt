@@ -1,0 +1,11 @@
+Model Information:
+* title:	FBX_Escenario5
+* source:	https://sketchfab.com/3d-models/fbx-escenario5-2f64f9ce648d49eebc72ddcbc6005f66
+* author:	Inmersys (https://sketchfab.com/inmersys)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "FBX_Escenario5" (https://sketchfab.com/3d-models/fbx-escenario5-2f64f9ce648d49eebc72ddcbc6005f66) by Inmersys (https://sketchfab.com/inmersys) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

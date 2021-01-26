@@ -3,12 +3,7 @@
     <ModalFinishedCart />
     <ModalSantaVideo v-if="isSantaVideoModalShown" />
     <div v-if="isPageLoading" class="flex flex-col items-center justify-center h-full">
-      <img
-        class="animate-spin w-12 h-12"
-        src="https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/loading.svg"
-        alt=""
-        data-not-lazy
-      />
+      <div class="preloader"></div>
     </div>
     <div v-if="!isPageLoading" class="flex flex-col items-center">
       <div

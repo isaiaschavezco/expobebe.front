@@ -32,6 +32,9 @@
             {{ product.name.slice(0, 30) }}
           </div>
         </div>
+        <h1 class="text-lg" v-if="products.length === 0">
+          Parece que esta marca aún no tiene productos
+        </h1>
       </div>
     </div>
   </div>

@@ -1,12 +1,7 @@
 <template>
   <div class="w-full m-auto pt-1 h-full overflow-y-scroll font-bogle lg:px-20">
     <div v-if="isPageLoading" class="flex flex-col items-center justify-center h-full">
-      <img
-        class="animate-spin w-12 h-12"
-        src="https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/loading.svg"
-        alt=""
-        data-not-lazy
-      />
+      <div class="preloader"></div>
     </div>
     <div
       v-if="!isPageLoading"
@@ -50,12 +45,9 @@ export default {
     },
   },
   async created() {
+    this.$store.commit("menu/validateTypeScreen");
     this.typeScreen = this.$store.state.menu.currentSection;
-    if (!this.typeScreen) {
-      alert("No hay typo");
-    } else {
-      alert(this.typeScreen);
-    }
+
     this.eventId = this.$route.params.id;
     this.getEventById(this.eventId);
     await this.getChatByEventId();
@@ -137,6 +129,9 @@ export default {
         }, 10000);
       }
     },
+  },
+  destroyed() {
+    clearInterval(this.chatUpdateController);
   },
 };
 </script>

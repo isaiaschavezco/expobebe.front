@@ -1,14 +1,15 @@
 <template>
 <div class="w-full xl:px-64 m-auto pt-5 h-full overflow-y-scroll">
   <div v-if="isPageLoading" class="flex flex-col items-center justify-center h-full">
-    <img class="animate-spin w-12 h-12" :src="require('@/assets/img/all/loading.png')" alt="" data-not-lazy>
+<div class="preloader"></div>
+
   </div>
   <div v-if="!isPageLoading" class="flex flex-col items-center w-full">
     <!-- Carrete de Calendario -->
     <div class="fixed flex justify-center items-center z-20">
       <div class="flex justify-center items-center mr-6 cursor-pointer triangulo" @click="onPreviousMonthClicked">
       </div>
-      <div class="text-4xl text-graycorp rounded px-10 py-1 font-semibold  capitalize">
+      <div class=" text-lg md:text-2xl lg:text-2xl xl:text-4xl text-graycorp rounded px-10 py-1 font-semibold  capitalize">
         {{ months[selectedMonth] }}
       </div>
       <div class="flex justify-center items-center ml-6 cursor-pointer triangulo-invertido" @click="onNextMonthClicked">
@@ -21,7 +22,7 @@
         <div class=" flex flex-col  md:flex-row mt-10  events-border-top">
           <div :id="eventByDate[0]" :key="eventByDate[0]" class="flex w-10/12 md:w-2/12 mb-5">
             <div class="flex flex-col items-center ">
-              <div class=" text-white text-2xl bg-yellowcorp rounded py-2 px-8 font-bold shadow-xl eventdate-style">
+              <div class=" text-white text-lg  lg:text-xl xl:text-xl bg-yellowcorp rounded py-2 px-8 font-bold shadow-xl eventdate-style">
                 {{ eventByDate[0]  }}
               </div>
             </div>
@@ -46,7 +47,7 @@
     </div>
     <div 
       :class="principalColor"
-    v-if="eventsToRender.length >= 1" class="flex cursor-pointer items-center justify-center  w-8/12 lg:w-6/12 mx-auto text-white text-lg  rounded py-2 -my-20 mb-32 font-bold shadow-xl" @click="onNextMonthClicked">
+     class="flex cursor-pointer items-center justify-center  w-8/12 lg:w-6/12 mx-auto text-white text-lg  rounded py-2 -my-20 mb-32 font-bold shadow-xl" @click="onNextMonthClicked">
       Ir a {{ this.nextDateToQuery.toLocaleString('es-MX', { month: 'long', timeZone: 'America/Mexico_City', hour12: true }) }} <img class="h-4 w-4 ml-4" src="~assets/img/proximo-white.svg" alt="" srcset="">
     </div>
     <!--  -->
@@ -267,4 +268,6 @@ export default {
 border-bottom-right-radius: 100pt;
 border-top-left-radius: 100pt;
 }
+
+
 </style>
