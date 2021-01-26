@@ -24,17 +24,29 @@ export const mutations = {
           newListItems.push(item._id)
           return item
         }
-      })
+      } )
+      localStorage.setItem('shopinglist', JSON.stringify(state.wishlist.listItems));
+    
   },
   addItem (state, item) {
-    state.wishlist.listItems.push( item )  
+
+      state.wishlist.listItems.push( item )
+      localStorage.setItem('shopinglist', JSON.stringify(state.wishlist.listItems));
+    
+     
     state.existInCar = true
     state.isAddedCartModalShown = true
     console.log("state",state);
   },
   async getWishList ( state ) {
-    
-    return state.wishlist.listItems
+    let data = localStorage.getItem('shopinglist');
+    if( data )
+    {
+      state.wishlist.listItems = JSON.parse(data);
+    } else
+    {
+      localStorage.setItem('shopinglist', JSON.stringify([]));
+    } 
   },
   async sendLetter (state,type) {
       try
@@ -50,7 +62,8 @@ export const mutations = {
       this.existProduct = false
       this.existProduct = false
       state.wishlist.listItems = []
-        
+       localStorage.removeItem('shopinglist');
+ 
     } catch (error) {
       console.log('Ocurrio un error', error)
     }

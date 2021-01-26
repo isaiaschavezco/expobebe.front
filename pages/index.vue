@@ -36,7 +36,7 @@ import {
   SpriteMaterial,
   Sprite,
   Vector3,
-  ArrowHelper
+  ArrowHelper,
 } from "three";
 import { NEWBORN, UNDER, PREGNED } from "../types/";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
@@ -77,6 +77,8 @@ export default {
     };
   },
   async created() {
+    this.$store.commit("shopinglist/getWishList");
+
     try {
       const { data } = await this.$api.event.getEvent360Meny(this.formatDate(new Date()));
       if (data.status.code === "0000") {
@@ -126,16 +128,12 @@ export default {
           const animation = mixer.clipAction(gltf.animations[0]);
           animation.play();
 
-          
           this.event3DObject = gltf.scene.getObjectByName(
             "PantallaFade_MT_PantallaFade_0",
             true
           );
-          this.floor = gltf.scene.getObjectByName(
-            "Plano_Piso_Piso_Referencia_0",
-            true
-          );
-          this.floor.material.normalScale.set(12,12)
+          this.floor = gltf.scene.getObjectByName("Plano_Piso_Piso_Referencia_0", true);
+          this.floor.material.normalScale.set(12, 12);
 
           console.log("this.event3DObject: ", this.event3DObject);
           if (this.eventToShow) {
@@ -171,7 +169,7 @@ export default {
       dracoLoader.setDecoderPath("gltf/");
       loader.setDRACOLoader(dracoLoader);
       loader.load("ciguena/Ciguena-Anim2.gltf", (gltf) => {
-        gltf.scene.position.set(200, 20,100);
+        gltf.scene.position.set(200, 20, 100);
         gltf.scene.rotation.set(0, -2.2, 0);
         this.ciguena = gltf.scene;
         console.log("gltf", gltf);
@@ -206,11 +204,11 @@ export default {
         1000
       );
       this.scene = new Scene();
-    
+
       // const axesHelper = new AxesHelper(50);
       // this.scene.add(axesHelper);
       this.renderer = new WebGLRenderer({ antialias: true });
-      
+
       this.renderer.setSize(
         this.mainContainer.clientWidth,
         this.mainContainer.clientHeight
@@ -231,14 +229,14 @@ export default {
       this.controls.rotateSpeed *= -0.2;
       this.controls.enableZoom = true;
 
-  const origin = new Vector3( 0, 0, 0 );
-  const length = 1;
-const hex = 0xffff00;
-      this.centroControls = new Vector3( 2, 0, 5 ).normalize();
-  this.arrowHelper = new ArrowHelper( this.centroControls, origin, length, hex );
-this.scene.add( this.arrowHelper );
+      const origin = new Vector3(0, 0, 0);
+      const length = 1;
+      const hex = 0xffff00;
+      this.centroControls = new Vector3(2, 0, 5).normalize();
+      this.arrowHelper = new ArrowHelper(this.centroControls, origin, length, hex);
+      this.scene.add(this.arrowHelper);
 
-      this.controls.target = this.centroControls 
+      this.controls.target = this.centroControls;
 
       // this.controls.maxDistance = 2;
       // this.controls.minDistance = 0;
@@ -262,8 +260,6 @@ this.scene.add( this.arrowHelper );
 
       const renderPass = new RenderPass(this.scene, this.camera);
       this.composer.addPass(renderPass);
-
-    
 
       this.mainContainer.addEventListener("mousemove", this.onMouseMove, false);
       this.mainContainer.addEventListener("click", this.onInteractionEvent, false);
@@ -366,11 +362,11 @@ this.scene.add( this.arrowHelper );
       cameraFolder
         .add(options.camara, "z", -400, 400)
         .onChange((value) => changeZcamera(value));
-        //TARGET
+      //TARGET
       targetFolder
         .add(options.camaraCentro, "x", -400, 400)
         .onChange((value) => changeXtarget(value));
-        //bloqueo
+      //bloqueo
       targetFolder
         .add(options.camaraCentro, "block", false)
         .onChange((value) => blockCamera(value));
@@ -378,15 +374,12 @@ this.scene.add( this.arrowHelper );
         .add(options.camaraCentro, "block360", false)
         .onChange((value) => blockCamera360(value));
 
-
-
       targetFolder
         .add(options.camaraCentro, "y", -400, 400)
         .onChange((value) => changeYtarget(value));
       targetFolder
         .add(options.camaraCentro, "z", -400, 400)
         .onChange((value) => changeZtarget(value));
-
 
       pajaroFolder
         .add(options.pajaro, "x", -500, 400)
@@ -464,27 +457,22 @@ this.scene.add( this.arrowHelper );
         .onChange((value) => changeScaleLogo(value));
 
       const blockCamera = (status) => {
-        if(status){
+        if (status) {
           this.controls.maxDistance = 4;
           this.controls.minDistance = 0;
-        }else{
-
-        this.controls.maxDistance = 10000000;
+        } else {
+          this.controls.maxDistance = 10000000;
           this.controls.minDistance = 0;
         }
-              this.controls.update();
-
-
+        this.controls.update();
       };
       const blockCamera360 = (status) => {
         if (status) {
-                this.controls.maxAzimuthAngle = -1 * Math.PI;
-        }else{
-                this.controls.maxAzimuthAngle = Math.PI*2;
+          this.controls.maxAzimuthAngle = -1 * Math.PI;
+        } else {
+          this.controls.maxAzimuthAngle = Math.PI * 2;
         }
-              this.controls.update();
-              
-
+        this.controls.update();
       };
       const changeFov = (fov) => {
         this.camera.fov = fov;
@@ -503,24 +491,20 @@ this.scene.add( this.arrowHelper );
         this.centroControls.x = n;
         this.camera.updateProjectionMatrix();
         this.controls.update();
-        this.arrowHelper.setDirection(this.centroControls)
+        this.arrowHelper.setDirection(this.centroControls);
       };
       const changeYtarget = (n) => {
         this.centroControls.y = n;
         this.camera.updateProjectionMatrix();
         this.controls.update();
-        this.arrowHelper.setDirection(this.centroControls)
+        this.arrowHelper.setDirection(this.centroControls);
       };
       const changeZtarget = (n) => {
         this.centroControls.z = n;
         this.camera.updateProjectionMatrix();
         this.controls.update();
-        this.arrowHelper.setDirection(this.centroControls)
+        this.arrowHelper.setDirection(this.centroControls);
       };
-
-
-
-
 
       const changeXRcamera = (n) => {
         this.camera.rotation.x = n;
@@ -579,11 +563,10 @@ this.scene.add( this.arrowHelper );
         this.postpartoButton.position.z = n;
       };
       const changeScalerojo = (n) => {
-        console.log(this.postpartoButton)
-        console.log(this.postpartoButton.scale)
+        console.log(this.postpartoButton);
+        console.log(this.postpartoButton.scale);
         this.postpartoButton.scale.setScalar(n);
-        console.log(this.postpartoButton.scale)
-
+        console.log(this.postpartoButton.scale);
       };
       //Morado
       const changeXmorado = (n) => {
@@ -596,7 +579,7 @@ this.scene.add( this.arrowHelper );
         this.primerosButton.position.z = n;
       };
       const changeScalemorado = (n) => {
-        this.primerosButton.scale.setScalar(n) ;
+        this.primerosButton.scale.setScalar(n);
       };
       //Azul
       const changeXazul = (n) => {
@@ -609,7 +592,7 @@ this.scene.add( this.arrowHelper );
         this.embarazoButton.position.z = n;
       };
       const changeScaleazul = (n) => {
-        this.embarazoButton.scale.setScalar(n)
+        this.embarazoButton.scale.setScalar(n);
       };
       //Logo
       const changeXlogo = (n) => {
@@ -622,7 +605,7 @@ this.scene.add( this.arrowHelper );
         this.logoButton.position.z = n;
       };
       const changeScaleLogo = (n) => {
-        this.logoButton.scale.setScalar(n)
+        this.logoButton.scale.setScalar(n);
       };
     },
 
