@@ -5,10 +5,9 @@ export const state = () => ({
   isAddedCartModalShown: false,
   existInCar: false,
   wishlist: {
-    email: 'isaiaschavez.co@gmail.com',
-    gender: 'female',
+    email: '',
+    gender: '',
     listItems: [
-     
     ]
   }
 })
@@ -57,10 +56,10 @@ export const mutations = {
         newListItems.push(item._id)
       })
       data.listItems = newListItems
-      const response = await this.$api.card.create(data,type)
+        const response = await this.$api.card.create( data, type )        
+        state.isShopingCarListVisible = false        
       console.log( response );
-      this.existProduct = false
-      this.existProduct = false
+      
       state.wishlist.listItems = []
        localStorage.removeItem('shopinglist');
  
@@ -79,8 +78,14 @@ export const mutations = {
    }
   },
   
-  setIsVideoModalShown (state, status) {
-    state.isSantaVideoModalShown = status
+  setisShopingCarListOk (state, status) {
+    state.isShopingCarListOk = status
+  },
+  setEmail (state, email) {
+    state.wishlist.email = email
+  },
+  setGender (state, gender) {
+    state.wishlist.gender = gender
   },
   setIsAddedCartModalShown (state, status) {
     state.isAddedCartModalShown = status

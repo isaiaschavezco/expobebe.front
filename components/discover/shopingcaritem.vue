@@ -3,7 +3,7 @@
     <div class="w-2/6 flex-1 mr-3 rounded">
       <img
         class="shopingList_item_image rounded"
-        :src="item.images[0]"
+        :src="item.urlThumbnail"
         alt="nombre del juguete"
       />
     </div>

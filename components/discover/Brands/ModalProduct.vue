@@ -19,15 +19,15 @@
           <div class="precarga img_cardproduct relative overflow-hidden w-11/12">
             <img
               class="object-contain h-full w-full box-border"
-              :src="product.images[0]"
+              :src="product.urlThumbnail"
             />
-            <img
+            <!--<img
               :class="this.show360 ? 'opacity-50' : ''"
               class="absolute button__360 cursor-pointer w-10 h-10 xl:w-12 xl:h-12"
               src="https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/btn_360.png"
               alt=""
               @click="onShow360"
-            />
+            />-->
           </div>
         </div>
         <div
@@ -103,6 +103,8 @@ export default {
     onClickAdd() {
       this.$store.commit("shopinglist/addItem", this.product);
       this.productExist = true;
+      this.$store.commit("shopinglist/setIsAddedCartModalShown", true);
+      this.closeFunction();
     },
     onCheckShopingList() {
       this.$store.commit("shopinglist/toggleShopingCarListVisible");

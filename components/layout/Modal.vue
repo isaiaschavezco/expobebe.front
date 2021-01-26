@@ -14,9 +14,11 @@
         </button>
       </div>
       <div class="lg:p-4 flex justity-center items-center h-full precarga">
-        <img
-          src="https://ahorraya.com.ar/public/gimg/7/4/0/6/6/8/740668-900-100000.jpg"
-          class="img__catalogo object-cover w-2/6 m-auto"
+        <iframe
+          src="https://catalogowalmart.com.mx/"
+          class="img__catalogo object-cover w-full h-full m-auto"
+          frameborder="0"
+          allowfullscreen
         />
       </div>
     </div>

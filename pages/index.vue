@@ -169,8 +169,8 @@ export default {
       dracoLoader.setDecoderPath("gltf/");
       loader.setDRACOLoader(dracoLoader);
       loader.load("ciguena/Ciguena-Anim2.gltf", (gltf) => {
-        gltf.scene.position.set(198, 35, 75);
-        gltf.scene.rotation.set(0, -3.5, 0);
+        gltf.scene.position.set(198, 43, 75);
+        gltf.scene.rotation.set(0, 4, 0);
         this.ciguena = gltf.scene;
         console.log("gltf", gltf);
         mixerCiguena = new AnimationMixer(gltf.scene);
@@ -216,7 +216,7 @@ export default {
       this.renderer.setPixelRatio(
         window.devicePixelRatio >= 2 ? 2 : window.devicePixelRatio
       );
-      this.renderer.gammaFactor = 2.2;
+      this.renderer.gammaFactor = 10;
       this.renderer.gammaOutput = true;
       this.renderer.physicallyCorrectLights = true;
       this.mainContainer.appendChild(this.renderer.domElement);
@@ -284,8 +284,8 @@ export default {
     principalButtons() {
       this.logoButton = this.createSprite("./logo_universo.png");
       console.log("this.logoButton", this.logoButton);
-      this.logoButton.position.set(50, 75, 2);
-      this.logoButton.scale.set(53, 53, 53);
+      this.logoButton.position.set(50, 84, 2);
+      this.logoButton.scale.set(60, 60, 60);
       this.logoButton.name = "logo";
 
       this.embarazoButton = this.createSprite("./botones/embarazo.png");
@@ -297,6 +297,7 @@ export default {
       this.postpartoButton.scale.set(35, 35, 35);
       this.postpartoButton.position.set(50, 34, 5);
       this.postpartoButton.name = "postparto";
+      console.log("this.postpartoButton", this.postpartoButton);
 
       this.primerosButton = this.createSprite("./botones/primeros.png");
       this.primerosButton.scale.set(35, 35, 35);

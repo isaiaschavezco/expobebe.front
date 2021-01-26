@@ -72,7 +72,7 @@
           class="block w-2/6 text-white mt-2 md:mt-2 hover:bg-blue-500 shadow-lg font-semibold hover:text-white py-3 px-4 hover:border-transparent rounded"
           @click="onPressSendLetterButton"
         >
-          Enviar carta
+          Enviar <i>wishlist</i>
         </button>
       </div>
     </div>
@@ -97,14 +97,6 @@ export default {
     colorCard: String,
   },
 
-  created() {
-    let path = this.$route.fullPath;
-    this.section = path.includes("newborn")
-      ? NEWBORN
-      : path.includes("pregned")
-      ? PREGNED
-      : UNDER;
-  },
   computed: {
     principalColor() {
       let typeScreen = this.$store.state.menu.currentSection;
@@ -142,7 +134,9 @@ export default {
     },
     // Trae las cartas que tenga el usuario
     onPressSendLetterButton() {
-      this.$store.commit("shopinglist/sendLetter", this.section);
+      this.$store.commit("shopinglist/toggleShopingCarListVisible");
+
+      this.$store.commit("shopinglist/setisShopingCarListOk", true);
       // this.$store.commit("shopinglist/toggleShopingCarListVisible");
     },
   },

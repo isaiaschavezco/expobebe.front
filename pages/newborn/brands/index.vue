@@ -1,6 +1,6 @@
 <template>
   <div class="px-8 lg:px-32 m-auto pt-5 h-full min-w-full overflow-y-scroll">
-    <ModalFinishedCart />
+    <ModalFinishedCart v-if="isFinishedCartModalShown" />
     <ModalSantaVideo v-if="isSantaVideoModalShown" />
     <div v-if="isPageLoading" class="flex flex-col items-center justify-center h-full">
       <div class="preloader"></div>
@@ -66,6 +66,10 @@ export default {
     },
     tradeMarks() {
       return this.$store.state.discoverStore.tradeMarks;
+    },
+    isFinishedCartModalShown() {
+      // Solo se mostrará si se está ok  con los articulos del carrito
+      return this.$store.state.shopinglist.isShopingCarListOk;
     },
   },
   mounted() {

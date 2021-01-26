@@ -46,25 +46,10 @@
     </header>
     <Nuxt class="move__header" />
 
-    <div class="fixed bottom-0 right-0 mr-8 z-40">
+    <div class="fixed bottom-0 right-0 mr-8 mb-3 z-40">
       <img
-        v-if="currentSection === newborn"
         class="w-12 cursor-pointer md:w-20 z-50"
-        src="https://expobebe.fra1.digitaloceanspaces.com/btn_descarga_rosa.png"
-        alt="Boton"
-        @click="onCatalogOpen"
-      />
-      <img
-        v-if="currentSection === under"
-        class="w-12 cursor-pointer md:w-20 z-50"
-        src="https://expobebe.fra1.digitaloceanspaces.com/btn_descarga_morado.png"
-        alt="Boton"
-        @click="onCatalogOpen"
-      />
-      <img
-        v-if="currentSection === pregned"
-        class="w-12 cursor-pointer md:w-20 z-50"
-        src="https://expobebe.fra1.digitaloceanspaces.com/btn_descarga_azul.png"
+        src="https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/icono_catalogo.png"
         alt="Boton"
         @click="onCatalogOpen"
       />

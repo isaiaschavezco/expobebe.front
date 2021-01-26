@@ -1,35 +1,30 @@
 <template>
-  <Modal :is-modal-visible="isAddedCartModalShown" class="z-50">
+  <Modal :is-modal-visible="true" class="z-50">
     <ButtonExit :funcion="this.onAddedCartModalClose" />
-    <div class="w-11/12 lg:w-2/4 relative z-50">
-      <div
-        class="mb-5 z extensor w-full relative flex justify-center flex items-center flex-col"
-        style="position: relative"
-      >
-        <div class="w-9/12 text-modal-confirmation text-center">
-          <p class="text-white font-bold text-xl md:h-10 md:text-3xl lg:text-4xl">
-            ¡Excelente!
-          </p>
-          <p class="text-white font-bold text-xl md:h-10 md:text-3xl lg:text-4xl">
-            Hemos apuntado este juguete en tu cartita
-          </p>
+    <div
+      class="w-full md:w-10/12 relative z-50 modal__info justify-center flex items-center flex-col"
+    >
+      <div class="w-full header-modal__info justify-center flex items-center">
+        <div
+          class="w-full md:w-9/12 text-modal-confirmation text-center justify-center flex"
+        >
+          <img src="@/assets/img/all/nubes_cig.svg" />
         </div>
       </div>
-      <div class="flex justify-around">
+      <div class="flex justify-center md:justify-end footer-modal__info w-full">
         <button
-          class="boton push-boton bc-8DC112 w-5/12 bg-green-500 hover:bg-green-700 text-white font-bold text-base md:text-xl px-1 rounded shadow-xl md:h-16"
           @click="onAddedCartModalClose"
+          class="text-xs md:text-lg text-center boton-modal__info bg-yellowcorp text-white py-2 px-1 hover:bg-bluenewborn shadow-lg font-semibold hover:text-white hover:border-transparent rounded-2xl"
         >
-          Continuar agregando
+          Continuar Agregando
         </button>
-        <!-- <button class="bc-FCBD1B w-5/12 bg-yellow-500 hover:bg-yellow-700 text-white font-bold text-xl px-1 rounded shadow-xl ml-5 md:h-16" @click="onCartSent">
-              Enviar mi carta a santa
-            </button> -->
+
         <button
-          class="boton bc-FCBD1B w-5/12 bg-yellow-500 hover:bg-yellow-700 text-white font-bold text-base md:text-xl px-1 rounded shadow-xl ml-5 md:h-16"
           @click="onCheckCart"
+          type="button"
+          class="text-xs md:text-lg bg-pregned boton-modal__info text-white py-2 px-1 ml-4 hover:bg-bluenewborn shadow-lg font-semibold hover:text-white hover:border-transparent rounded-2xl"
         >
-          Revisar mi cartita
+          Revisar mi <i class="font-bold"> wishlist</i>
         </button>
       </div>
     </div>
@@ -67,26 +62,22 @@ export default {
   width: 100%;
   max-width: 100%;
 }
-.text-modal-confirmation {
-  position: absolute;
-  max-width: 70%;
-  margin: auto;
-  left: calc(10%);
-  top: 30%;
+.modal__info {
+  height: 80%;
 }
-@media (min-width: 1200px) {
-  .text-modal-confirmation {
-    position: absolute;
-    left: calc(5%);
-    top: 35%;
-  }
+.header-modal__info {
+  height: 70%;
 }
-@media (min-width: 1500px) {
-  .text-modal-confirmation {
-    position: absolute;
-    left: 10%;
-    top: 35%;
-  }
+.footer-modal__info {
+  height: 30%;
+}
+.boton-modal__info {
+  max-height: 3rem;
+  padding: 0.8rem;
+  min-width: 20%;
+  -webkit-box-shadow: 0px 0px 30px -10px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 0px 30px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 30px -10px rgba(0, 0, 0, 0.75);
 }
 .popup {
   animation: popup 0.5s;

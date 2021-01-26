@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full flex items-center overflow-y-scroll mb-10">
     <ShopingCardList v-if="shopingCarListStatus" />
-    <ModalFinishedCart />
+    <ModalFinishedCart v-if="isFinishedCartModalShown" />
     <ModalSantaVideo v-if="isSantaVideoModalShown" />
     <div class="flex flex-wrap justify-center items-center px-5 lg:px-10 w-full h-full">
       <CardSection
@@ -55,6 +55,10 @@ export default {
     },
     isSantaVideoModalShown() {
       return this.$store.state.shopinglist.isSantaVideoModalShown;
+    },
+    isFinishedCartModalShown() {
+      // Solo se mostrará si se está ok  con los articulos del carrito
+      return this.$store.state.shopinglist.isShopingCarListOk;
     },
   },
   created() {

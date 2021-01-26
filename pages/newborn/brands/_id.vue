@@ -1,8 +1,9 @@
 <template>
   <div class="px-5 pt-5 h-full w-full overflow-y-scroll">
-    <ModalFinishedCart />
-    <ModalSantaVideo v-if="isSantaVideoModalShown" />
+    <ModalFinishedCart v-if="isFinishedCartModalShown" />
     <ShopingCardList v-if="shopingCarListStatus" />
+    <ModalProductAdded v-if="isAddedCartModalShown" />
+
     <ModalProduct
       v-if="this.showModalProduct"
       :product="this.currentProduct"
@@ -21,7 +22,7 @@
           <div class="w-full h-full precarga">
             <img
               class="shadow-xl push-boton border-show imagen-j rounded-lg border-bottom-left-radius"
-              :src="product.images[0]"
+              :src="product.urlThumbnail"
               alt=""
               v-lazy-load
             />
@@ -43,6 +44,7 @@
 <script>
 import ShopingCardList from "@/components/discover/shopingcardlist";
 import ModalFinishedCart from "@/components/discover/ModalFinishedCart";
+import ModalProductAdded from "@/components/discover/ModalProductAdded";
 import ModalSantaVideo from "@/components/discover/ModalSantaVideo";
 import ModalProduct from "@/components/discover/Brands/ModalProduct";
 import { NEWBORN, UNDER, PREGNED } from "@/types/";
@@ -89,11 +91,15 @@ export default {
         ? "under"
         : "pregned";
     },
+    isFinishedCartModalShown() {
+      // Solo se mostrará si se está ok  con los articulos del carrito
+      return this.$store.state.shopinglist.isShopingCarListOk;
+    },
+    isAddedCartModalShown() {
+      return this.$store.state.shopinglist.isAddedCartModalShown;
+    },
     shopingCarListStatus() {
       return this.$store.state.shopinglist.isShopingCarListVisible;
-    },
-    isSantaVideoModalShown() {
-      return this.$store.state.shopinglist.isSantaVideoModalShown;
     },
     products() {
       return this.$store.state.discoverStore.currentTradeMarkProducts;
