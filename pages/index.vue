@@ -102,7 +102,7 @@ export default {
     this.getScene();
     this.principalButtons();
     // this.controladores();
-    this.helpers();
+    // this.helpers();
     this.animate();
   },
   beforeDestroy: function () {
@@ -127,7 +127,7 @@ export default {
       this.mainContainer.appendChild(this.renderer.domElement);
 
       this.camera = new PerspectiveCamera(
-        55,
+        50,
         this.mainContainer.clientWidth / this.mainContainer.clientHeight,
         0.1,
         1000
@@ -231,7 +231,7 @@ export default {
       dracoLoader.setDecoderPath("gltf/");
       loader.setDRACOLoader(dracoLoader);
       loader.load("ciguena/Ciguena-Anim2.gltf", (gltf) => {
-        gltf.scene.position.set(198, 43, 80);
+        gltf.scene.position.set(198, 51, 80);
         gltf.scene.rotation.set(0, 3.7, 0);
         this.ciguena = gltf.scene;
         mixerCiguena = new AnimationMixer(gltf.scene);
@@ -261,7 +261,7 @@ export default {
     },
     principalButtons() {
       this.logoButton = this.createSprite("./logo_universo.png");
-      this.logoButton.position.set(50, 84, 2);
+      this.logoButton.position.set(50, 94, 2);
       this.logoButton.scale.set(50, 50, 0);
       this.logoButton.name = "logo";
 
