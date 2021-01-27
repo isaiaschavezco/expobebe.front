@@ -1,4 +1,4 @@
-controles    controladores() {
+controladores() {
       const options = {
         camara: {
           fov: 80,

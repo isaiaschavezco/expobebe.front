@@ -10,7 +10,7 @@
       <SocialComponent
         :title="this.event.name"
         :colorCard="principalColor"
-        urlVideo="https://www.youtube.com/embed/tlKNB5Ztyxg"
+        :urlVideo="this.event.eventUrl"
         :chat="chat"
         :onMessageSend="onMessageSend"
       />
@@ -47,7 +47,6 @@ export default {
   async created() {
     this.$store.commit("menu/validateTypeScreen");
     this.typeScreen = this.$store.state.menu.currentSection;
-
     this.eventId = this.$route.params.id;
     this.getEventById(this.eventId);
     await this.getChatByEventId();
