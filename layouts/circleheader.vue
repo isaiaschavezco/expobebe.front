@@ -91,13 +91,13 @@ export default {
     },
     headerSize() {
       let style = "text-xl  font-bold";
-      if (this.$store.state.menu.title.length > 20) {
+      if (this.$store.state.menu.title.length > 15) {
         style = " text-xl ";
       }
-      if (this.$store.state.menu.title.length > 30) {
+      if (this.$store.state.menu.title.length > 25) {
         style = " text-lg ";
       }
-      if (this.$store.state.menu.title.length > 40) {
+      if (this.$store.state.menu.title.length > 35) {
         style = " text-sm ";
       }
       return style;

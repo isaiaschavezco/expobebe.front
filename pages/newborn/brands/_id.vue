@@ -11,7 +11,7 @@
     />
 
     <div v-if="!isPageLoading" class="flex items-center justify-center w-full">
-      <div class="flex flex-wrap justify-center items-center mt-10 px-1 scrollbar">
+      <div class="flex flex-wrap justify-center items-center px-1 mx-2 scrollbar">
         <div
           v-for="product in products"
           :key="product._id"
@@ -168,7 +168,7 @@ export default {
   -moz-box-shadow: 0px 2px 29px -17px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 2px 29px -17px rgba(0, 0, 0, 0.75);
   min-height: 15rem;
-  min-width: 20rem;
+  min-width: 18rem;
   max-width: 18%;
 }
 .title-component-style {

@@ -34,7 +34,7 @@
           class="w-full md:w-8/12 mx-auto h-screen flex justify-center items-center"
         >
           <div
-            class="text-center text-graycorp w-32 md:w-full flex flex-col justify-center items-center my-auto lg:text-xl"
+            class="text-center text-graycorp w-10/12 md:w-full flex flex-col justify-center items-center my-auto lg:text-xl"
           >
             <p class="shopingList_text block mb-8">Tu wishlist está vacia</p>
             <img
@@ -49,7 +49,7 @@
               v-if="listItems.length === 0"
               type="button"
               :class="this.principalColor"
-              class="block text-lg w-2/6 text-white mt-2 md:mt-16 py-2 px-1 hover:bg-bluenewborn shadow-lg font-semibold hover:text-white hover:border-transparent rounded-2xl"
+              class="block text-lg w-10/12 mt-3 margin-auto md:w-2/6 text-white mt-2 md:mt-16 py-2 px-1 hover:bg-bluenewborn shadow-lg font-semibold hover:text-white hover:border-transparent rounded-2xl"
               @click="onShopingCarButtonClick"
             >
               Seleccionar productos

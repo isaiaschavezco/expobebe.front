@@ -37,6 +37,7 @@ export default {
   .custom-card-descubre {
     margin: 1rem;
     max-width: 20rem;
+    min-width: 20rem;
     width: 20rem;
     max-height: 20rem;
     height: 20rem;
