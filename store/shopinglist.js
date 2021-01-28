@@ -63,8 +63,9 @@ export const mutations = {
       state.wishlist.listItems = []
        localStorage.removeItem('shopinglist');
        let gen = state.wishlist.gender ==='male' ? 'nino':'nina'
-       let user = state.wishlist.gender ==='male' ? 'nino':'nina'
       const win = window.open(`https://vivirmejor.mx/universo-del-bebe/ebook-de-nombre-para-tu-bebe/?genero=${gen}&usuario=${state.wishlist.email}`, "_blank");
+      state.wishlist.email = ""
+      state.wishlist.gender =""
       // Cambiar el foco al nuevo tab (punto opcional)
       win.focus();
  
