@@ -143,7 +143,7 @@ export default {
       set: function (email) {
         /*         return this.$store.state.shopinglist.nameToSanta
          */
-        this.$store.commit("shopinglist/setEmail", email);
+        this.$store.commit("shopinglist/setEmail", email.trim());
       },
     },
   },

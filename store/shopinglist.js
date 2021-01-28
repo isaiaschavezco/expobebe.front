@@ -48,21 +48,22 @@ export const mutations = {
     } 
   },
   async sendLetter (state,type) {
-      try
-      {
-      let data = {...state.wishlist}
+    try
+    {
+      let data = { ...state.wishlist }
       const newListItems = []
-      state.wishlist.listItems.forEach(item => {
-        newListItems.push(item._id)
-      })
+      state.wishlist.listItems.forEach( item => {
+        newListItems.push( item._id )
+      } )
       data.listItems = newListItems
-        const response = await this.$api.card.create( data, type )        
-        state.isShopingCarListVisible = false        
+      const response = await this.$api.card.create( data, type )
+      state.isShopingCarListVisible = false
       console.log( response );
       
       state.wishlist.listItems = []
-       localStorage.removeItem('shopinglist');
-       let gen = state.wishlist.gender ==='male' ? 'nino':'nina'
+      localStorage.removeItem( 'shopinglist' );
+      let gen = state.wishlist.gender === 'male' ? 'nino' : 'nina'
+      console.log("Hola", state.wishlist.email , gen);
       const win = window.open(`https://vivirmejor.mx/universo-del-bebe/ebook-de-nombre-para-tu-bebe/?genero=${gen}&usuario=${state.wishlist.email}`, "_blank");
       state.wishlist.email = ""
       state.wishlist.gender =""
