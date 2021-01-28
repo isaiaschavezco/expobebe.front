@@ -90,8 +90,8 @@ export default {
       return this.$store.state.menu.title;
     },
     headerSize() {
-      let style = "text-2xl  font-bold";
-      if (this.$store.state.menu.title.length > 30) {
+      let style = "text-xl  font-bold";
+      if (this.$store.state.menu.title.length > 20) {
         style = " text-xl ";
       }
       if (this.$store.state.menu.title.length > 30) {

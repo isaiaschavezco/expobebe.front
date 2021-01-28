@@ -85,7 +85,9 @@ export default {
 .modal_container {
   border-radius: 13pt;
   margin: auto;
-  height: 90%;
+
+  height: 90% !important;
+  min-height: 90%;
 }
 .video-header {
   -webkit-box-shadow: 0px 2px 33px -17px rgba(0, 0, 0, 0.75);
