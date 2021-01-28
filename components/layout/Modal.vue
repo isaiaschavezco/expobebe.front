@@ -28,7 +28,7 @@
           @click="onCatalogOpen"
         />
         <button
-          class="absolute top-0 right-0 mt-4 mr-10 font-bold h-6 w-6 flex items-center justify-center text-white shopingList_burguer-button"
+          class="absolute top-0 right-0 mt-4 mr-5 md:mr-10 font-bold h-6 w-6 flex items-center justify-center text-white shopingList_burguer-button"
           @click="closeFunction"
         >
           <p class="place-self-center">&times;</p>

@@ -10,7 +10,7 @@
     <div
       class="w-auto flex flex-col items-center justify-center flex-1 text-xs capitalize text-grayjugueti font-bold shopingList_text"
     >
-      <div class="text-lg lg:text-base flex-1 text-left">
+      <div class="text-sm md:text-lg lg:text-base flex-1 text-left">
         <h3>{{ item.name.slice(0, 30) }} sda</h3>
       </div>
       <div class="flex w-full justify-end items-center h-full text-grayjugueti">

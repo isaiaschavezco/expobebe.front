@@ -69,7 +69,7 @@
         <button
           type="button"
           :class="this.principalColor"
-          class="block w-2/6 text-white mt-2 md:mt-2 hover:bg-blue-500 shadow-lg font-semibold hover:text-white py-3 px-4 hover:border-transparent rounded"
+          class="block w-10/12 m-auto md:w-2/6 text-white mt-2 mb-2 md:mt-2 hover:bg-blue-500 shadow-lg font-semibold hover:text-white py-3 px-4 hover:border-transparent rounded"
           @click="onPressSendLetterButton"
         >
           Enviar <i>wishlist</i>
@@ -124,7 +124,6 @@ export default {
     onShopingCarButtonClick() {
       if (this.shopingCarListStatus) {
         this.animationName = "animation_hide";
-        // El set time out
         setTimeout(() => {
           this.$store.commit("shopinglist/toggleShopingCarListVisible");
         }, 700);
@@ -132,12 +131,9 @@ export default {
         this.$store.commit("shopinglist/toggleShopingCarListVisible");
       }
     },
-    // Trae las cartas que tenga el usuario
     onPressSendLetterButton() {
       this.$store.commit("shopinglist/toggleShopingCarListVisible");
-
       this.$store.commit("shopinglist/setisShopingCarListOk", true);
-      // this.$store.commit("shopinglist/toggleShopingCarListVisible");
     },
   },
 };

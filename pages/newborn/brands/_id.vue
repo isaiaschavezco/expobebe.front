@@ -11,12 +11,12 @@
     />
 
     <div v-if="!isPageLoading" class="flex items-center justify-center w-full">
-      <div class="flex flex-wrap justify-center items-center px-1 mx-2 scrollbar">
+      <div class="flex flex-wrap justify-center items-center px-1 mx-2 scrollbar mb-5">
         <div
           v-for="product in products"
           :key="product._id"
           :class="'bg-' + principalColor"
-          class="cursor-pointer card-brand overflow-hidden mt-5 md:ml-5 borde-disimulado imagen-brand-toy"
+          class="cursor-pointer card-brand overflow-hidden mt-3 md:ml-5 borde-disimulado imagen-brand-toy"
           @click="onTradeMarkClick(product)"
         >
           <div class="w-full h-full precarga">

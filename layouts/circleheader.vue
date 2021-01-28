@@ -10,7 +10,7 @@
       <div class="flex justify-around w-full pt-1 h-full text-center">
         <div class="flex flex-col items-center justify-center h-full ml-5 pt-2 md:ml-10">
           <img
-            class="h-10 w-10 lg:h-12 lg:w-12 left-4 cursor-pointer"
+            class="h-12 w-12 lg:h-12 lg:w-12 left-4 cursor-pointer"
             src="@/assets/img/moviles/icon_back.svg"
             alt="Back"
             @click="$router.go(-1)"
@@ -46,7 +46,7 @@
     </header>
     <Nuxt class="move__header" />
 
-    <div class="fixed bottom-0 right-0 mr-8 mb-3 z-40">
+    <div class="fixed bottom-0 right-0 mr-5 md:mr-8 mb-3 z-40">
       <img
         class="w-12 cursor-pointer md:w-20 z-50"
         src="https://sfo2.digitaloceanspaces.com/juguetilandia.media/assets/app/img/icono_catalogo.png"
