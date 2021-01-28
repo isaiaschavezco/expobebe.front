@@ -153,6 +153,8 @@ export default {
         this.$store.commit("shopinglist/setisShopingCarListOk", false);
         this.$store.commit("shopinglist/sendLetter", this.section);
         this.$store.commit("shopinglist/setListItems", []);
+        this.email = "";
+        this.gender = "";
       }
     },
     onClickButtonExit() {
