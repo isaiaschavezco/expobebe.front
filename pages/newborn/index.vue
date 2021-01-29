@@ -26,7 +26,7 @@
         :colorButton="'bg-' + this.principalColor"
       />
       <CardSection
-        :function="onClickLibrarySection"
+        :function="onClickBlogSection"
         urlImage="https://expobebe.fra1.digitaloceanspaces.com/ilu_blog.png"
         alt="Blog"
         title="Blog"
@@ -102,6 +102,10 @@ export default {
           typeScreen: this.typeScreen,
         },
       });
+    },
+    onClickBlogSection() {
+      const win = window.open(`https://vivirmejor.mx/contigo-en-cada-etapa/`, "_blank");
+      win.focus();
     },
   },
 };
