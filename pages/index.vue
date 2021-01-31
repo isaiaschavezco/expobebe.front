@@ -163,6 +163,8 @@ export default {
 
       // Raycast
       this.raycaster = new Raycaster();
+      this.raycaster.layers.set( 1 );
+    
 
       // Composer
       this.composer = new EffectComposer(this.renderer);
@@ -253,6 +255,7 @@ export default {
       const map = new TextureLoader().load(url);
       const material = new SpriteMaterial({ map: map });
       const sprite = new Sprite(material);
+      sprite.layers.enable( 1 );
       return sprite;
     },
     helpers() {
