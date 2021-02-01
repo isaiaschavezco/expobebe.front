@@ -9,14 +9,14 @@
       <div
         class="grid grid-cols-2 gap-8 mt-10 px-1 md:px-5 pb-20 md:grid-cols-3 lg:gap:16 lg:grid-cols-4"
       >
-        <img
+        <div
+          class="rounded-lg shadow-marca marca overflow-hidden cursor-pointer border-show"
           v-for="trademark in tradeMarks"
           :key="trademark._id"
-          class="rounded-lg marca cursor-pointer border-show"
-          :src="trademark.imageURL"
-          alt=""
           @click="onTradeMarkClick(trademark._id, trademark.name)"
-        />
+        >
+          <img class="object-cover" :src="trademark.imageURL" alt="" />
+        </div>
       </div>
       <ShopingCardList v-if="shopingCarListStatus" />
     </div>
@@ -93,7 +93,8 @@ export default {
 <style>
 .marca {
   border-radius: 18%;
-
+}
+.shadow-marca {
   -webkit-box-shadow: 1px 2px 13px -5px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 1px 2px 13px -5px rgba(0, 0, 0, 0.75);
   box-shadow: 1px 2px 13px -5px rgba(0, 0, 0, 0.75);

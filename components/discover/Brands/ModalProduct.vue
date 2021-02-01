@@ -46,7 +46,6 @@
       >
         <a
           @click="onClickShop"
-          :href="product.shopUrl"
           class="text-lg text-center bg-yellowcorp w-6/12 md:w-2/6 text-white py-2 px-1 hover:bg-bluenewborn shadow-lg font-semibold hover:text-white hover:border-transparent rounded-2xl"
         >
           Comprar
@@ -115,7 +114,12 @@ export default {
       this.$store.commit("shopinglist/toggleShopingCarListVisible");
       this.closeFunction();
     },
-    onClickShop() {},
+    onClickShop() {
+      if (product.shopUrl) {
+        const win = window.open(product.shopUrl, "_blank");
+        win.focus();
+      }
+    },
   },
 };
 </script>

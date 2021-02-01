@@ -19,7 +19,9 @@
           class="cursor-pointer card-brand overflow-hidden mt-3 md:ml-5 borde-disimulado imagen-brand-toy"
           @click="onTradeMarkClick(product)"
         >
-          <div class="w-full h-full precarga">
+          <div
+            class="w-full h-full precarga bg-white2 bg-white border-bottom-left-radius"
+          >
             <img
               class="shadow-xl push-boton border-show imagen-j rounded-lg border-bottom-left-radius"
               :src="product.urlThumbnail"
@@ -28,7 +30,7 @@
             />
           </div>
           <div
-            class="text-left lg:px-3 text-sm md:text-lg lg:text-xl borde-disimulado font-semibold title-component-style"
+            class="text-left lg:px-3 py-1 text-sm md:text-lg lg:text-xl borde-disimulado font-semibold title-component-style"
           >
             {{ product.name.slice(0, 30) }}
           </div>
@@ -170,6 +172,9 @@ export default {
   min-height: 15rem;
   min-width: 18rem;
   max-width: 18%;
+}
+.bg-white2 {
+  background: white !important;
 }
 .title-component-style {
   color: white;

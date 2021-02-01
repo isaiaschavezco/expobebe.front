@@ -76,5 +76,9 @@ export default {
         transpile: [
             'three'
         ]
-    }
+    },
+    generate: {
+    fallback: true
+      }
+
 }
