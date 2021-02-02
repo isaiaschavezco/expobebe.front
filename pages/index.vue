@@ -79,9 +79,11 @@ export default {
 
     try {
       const { data } = await this.$api.event.getEvent360Meny(this.formatDate(new Date()));
+      console.log("status.code", data.status.code);
       if (data.status.code === "0000") {
-        this.eventToShow = data.result.events[data.result.events.length - 1];
-        console.log("this.eventToShow", this.eventToShow);
+        this.eventToShow = data.result.ultimo_evento;
+        console.log("this.eventToShow", data.result.events);
+        console.log("this.eventToShow", data.result);
         if (this.event3DObject) {
           console.log("this.eventToShow", this.eventToShow);
           this.event3DObject.material.map = new TextureLoader().load(
@@ -99,10 +101,11 @@ export default {
   },
   mounted() {
     this.init();
+    this.getSky();
     this.getBird();
-    // this.getSky();
     this.getScene();
     this.principalButtons();
+
     this.animate();
   },
   beforeDestroy: function () {
@@ -181,7 +184,7 @@ export default {
       const loader = new GLTFLoader();
       loader.setDRACOLoader(dracoLoader);
       loader.load(
-        "scene/sceneDraco.gltf",
+        "https://cdn.glitch.com/4390c048-0cf2-49a3-ab03-4f452164ad25%2Fscene.gltf?v=1612294498206",
         (gltf) => {
           gltf.scene.position.set(0, -33, 0);
           gltf.scene.rotation.y = MathUtils.degToRad(-90);
@@ -194,6 +197,8 @@ export default {
             "PantallaFade_MT_PantallaFade_0",
             true
           );
+          this.event3DObject.layers.enable(1);
+
           this.floor = gltf.scene.getObjectByName("Plano_Piso_Piso_Referencia_0", true);
           this.floor.material.normalScale.set(12, 12);
 
@@ -240,23 +245,26 @@ export default {
     },
 
     getSky() {
-      // const loader = new TextureLoader();
-      // const texture = loader.load("./background.png", () => {
-      //   const rt = new WebGLCubeRenderTarget(texture.image.height);
-      //   rt.fromEquirectangularTexture(this.renderer, texture);
-      //   this.scene.background = rt;
-      // });
+      const loader = new TextureLoader();
+      const texture = loader.load(
+        "https://cdn.glitch.com/4390c048-0cf2-49a3-ab03-4f452164ad25%2Fbackground.png?v=1612294895748",
+        () => {
+          const rt = new WebGLCubeRenderTarget(texture.image.height);
+          rt.fromEquirectangularTexture(this.renderer, texture);
+          this.scene.background = rt;
+        }
+      );
 
-      let urls = [
-        "skybox/Cielo_NZ.jpg",
-        "skybox/Cielo_PZ.jpg",
-        "skybox/Cielo_PY.jpg",
-        "skybox/Cielo_NY.jpg",
-        "skybox/Cielo_PX.jpg",
-        "skybox/Cielo_NX.jpg",
-      ];
-      let loader = new CubeTextureLoader();
-      this.scene.background = loader.load(urls);
+      // let urls = [
+      //   "skybox/Cielo_NZ.jpg",
+      //   "skybox/Cielo_PZ.jpg",
+      //   "skybox/Cielo_PY.jpg",
+      //   "skybox/Cielo_NY.jpg",
+      //   "skybox/Cielo_PX.jpg",
+      //   "skybox/Cielo_NX.jpg",
+      // ];
+      // let loader = new CubeTextureLoader();
+      // this.scene.background = loader.load(urls);
     },
     createSprite(url) {
       const map = new TextureLoader().load(url);
@@ -316,9 +324,15 @@ export default {
       this.composer.render();
     },
     onInteractionEvent(event) {
-      event.preventDefault();
-      this.raycaster.setFromCamera(this.mouseData, this.camera);
+      event.preventDefault(this.scene.children);
+      //Se escogen los botones para evitar que el raycaster haga una búsqueda exaustiva
+      let buttos = [
+        this.scene.children[2],
+        this.scene.children[3],
+        this.scene.children[4],
+      ];
       const intersects = this.raycaster.intersectObjects(this.scene.children, true);
+
       if (intersects.length > 0) {
         if (intersects[0].object.name === "postparto") {
           localStorage.setItem("currentSection", NEWBORN);
@@ -358,6 +372,26 @@ export default {
                 id: this.eventToShow._id,
               },
             });
+          } else if (this.eventToShow.route === "pregned") {
+            localStorage.setItem("currentSection", PREGNED);
+            this.$store.commit("menu/setCurrentSection", PREGNED);
+            this.$router.push({
+              name: "newborn-events-id",
+              params: {
+                typeScreen: PREGNED,
+                id: this.eventToShow._id,
+              },
+            });
+          } else {
+            localStorage.setItem("currentSection", NEWBORN);
+            this.$store.commit("menu/setCurrentSection", NEWBORN);
+            this.$router.push({
+              name: "newborn-events-id",
+              params: {
+                typeScreen: NEWBORN,
+                id: this.eventToShow._id,
+              },
+            });
           }
         }
       }
@@ -377,10 +411,7 @@ export default {
           document.body.style.cursor = "pointer";
         } else if (intersects[0].object.name === "embarazo") {
           document.body.style.cursor = "pointer";
-        } else if (
-          intersects[0].object.name === "Letrero_M_Atlas_0" ||
-          intersects[0].object.name === "Evento_Evento_0"
-        ) {
+        } else if (intersects[0].object.name === "PantallaFade_MT_PantallaFade_0") {
           document.body.style.cursor = "pointer";
         } else {
           document.body.style.cursor = "auto";

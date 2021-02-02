@@ -2,12 +2,12 @@ import Repository from '~/services/RepositoryFactory'
 
 
 // const protocol  = "https://"
-const protocol  = "http://"
-const   host                 = "localhost"
-const   port                 = ":4000"
-// const protocol  = "https://"
-// const   host                 = "expobebe.asia"
-// const   port                 = ""
+// const protocol  = "http://"
+// const   host                 = "localhost"
+// const   port                 = ":4000"
+const protocol  = "https://"
+const   host                 = "expobebe.asia"
+const   port                 = ""
 
 export default function ({ $axios }, inject) {
   // Create a custom axios instance
