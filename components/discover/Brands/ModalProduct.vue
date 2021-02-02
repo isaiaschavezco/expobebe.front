@@ -9,7 +9,7 @@
 
       <div class="header_cardproduct w-100 flex justify-left items-center">
         <h3 class="text-gray-800 font-semibold text-sm md:text-lg ml-4 uppercase">
-          {{ product.name.slice(0, 28) }}
+          {{ product.name.slice(0, 70) }}
         </h3>
       </div>
       <div class="body_cardproduct w-100 flex flex-col md:flex-row">

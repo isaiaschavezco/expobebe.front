@@ -12,7 +12,7 @@
 
     <div v-if="!isPageLoading" class="flex items-center justify-center w-full">
       <div
-        class="w-full md:w-10/12 mx-auto grid grid-flow-row auto-rows-min grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-3 gap-5 flex-wrap justify-center items-center md:px-1 scrollbar mb-5"
+        class="w-full md:w-10/12 mx-auto grid grid-flow-row auto-rows-fr grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-3 gap-5 flex-wrap justify-center items-center md:px-1 scrollbar mb-5"
       >
         <div
           v-for="product in products"
@@ -22,42 +22,17 @@
           @click="onTradeMarkClick(product)"
         >
           <div
-            class="w-full precarga bg-white2 bg-white border-bottom-left-radius imagen__card-brand"
+            class="w-full precarga bg-white2 bg-white border-bottom-left-radius imagen__card-brand flex justify-center ites-center"
           >
             <img
-              class="shadow-xl push-boton border-show object-contain rounded-lg border-bottom-left-radius"
+              class="shadow-xl img__cardproduct push-boton border-show object-contain rounded-lg border-bottom-left-radius"
               :src="product.urlThumbnail"
               alt=""
               v-lazy-load
             />
           </div>
           <div
-            class="footer__card-brand text-center md:text-left px-2 py-1 text-sm md:text-sm xl:text-lg borde-disimulado font-semibold title-component-style flex justify-content items-center"
-          >
-            <p>
-              {{ product.name.slice(0, 50) }}
-            </p>
-          </div>
-        </div>
-        <div
-          v-for="product in products"
-          :key="product._id"
-          :class="'bg-' + principalColor"
-          class="cursor-pointer card-brand overflow-hidden borde-disimulado imagen-brand-toy"
-          @click="onTradeMarkClick(product)"
-        >
-          <div
-            class="w-full precarga bg-white2 bg-white border-bottom-left-radius imagen__card-brand"
-          >
-            <img
-              class="shadow-xl push-boton border-show object-contain rounded-lg border-bottom-left-radius"
-              :src="product.urlThumbnail"
-              alt=""
-              v-lazy-load
-            />
-          </div>
-          <div
-            class="footer__card-brand text-center md:text-left px-2 py-1 text-sm md:text-sm xl:text-lg borde-disimulado font-semibold title-component-style flex justify-content items-center"
+            class="footer__card-brand text-center md:text-left text-sm md:text-sm xl:text-lg borde-disimulado font-semibold title-component-style flex justify-content items-center"
           >
             <p>
               {{ product.name.slice(0, 50) }}
@@ -204,11 +179,20 @@ export default {
   height: 100%;
 }
 .imagen__card-brand {
-  height: 75%;
+  height: 80%;
   overflow: hidden;
+  max-height: 15rem;
+  min-height: 15rem;
 }
+.img__cardproduct {
+  max-height: 15rem;
+  min-height: 15rem;
+}
+
 .footer__card-brand {
-  height: 25%;
+  height: 20%;
+  padding: 1.3rem;
+  line-height: 1.4rem;
 }
 .bg-white2 {
   background: white !important;
@@ -216,9 +200,21 @@ export default {
 .title-component-style {
   color: white;
 }
+
 @media screen and (min-width: 2000px) {
-  .title-component-style {
-    font-size: 2.24rem;
+  .img__cardproduct {
+    max-height: 30rem;
+  }
+  .footer__card-brand {
+    line-height: 1.8rem;
+  }
+  .imagen__card-brand {
+    max-height: 20rem;
+    min-height: 20rem;
+  }
+  .img__cardproduct {
+    max-height: 20rem;
+    min-height: 20rem;
   }
 }
 .border-bottom-left-radius {
