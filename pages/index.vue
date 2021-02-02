@@ -138,12 +138,10 @@ export default {
       this.controls.maxAzimuthAngle = 2 * Math.PI;
       this.controls.maxPolarAngle = Math.PI / 2;
       this.controls.minPolarAngle = Math.PI / 2;
-      this.controls.enableDamping = true;
-      this.controls.dampingFactor = 0.05;
       this.controls.rotateSpeed *= -0.2;
       this.controls.enableZoom = true;
-      this.controls.maxDistance = 20;
-      this.controls.minDistance = 20;
+      // this.controls.maxDistance = 20;
+      // this.controls.minDistance = 20;
 
       this.camera.position.set(-500.5, 35, 0);
       this.camera.position.y = 35;
@@ -163,8 +161,7 @@ export default {
 
       // Raycast
       this.raycaster = new Raycaster();
-      this.raycaster.layers.set( 1 );
-    
+      this.raycaster.layers.set(1);
 
       // Composer
       this.composer = new EffectComposer(this.renderer);
@@ -185,7 +182,7 @@ export default {
       const loader = new GLTFLoader();
       loader.setDRACOLoader(dracoLoader);
       loader.load(
-        "scene/scene.gltf",
+        "scene/sceneDraco.gltf",
         (gltf) => {
           gltf.scene.position.set(0, -33, 0);
           gltf.scene.rotation.y = MathUtils.degToRad(-90);
@@ -255,7 +252,7 @@ export default {
       const map = new TextureLoader().load(url);
       const material = new SpriteMaterial({ map: map });
       const sprite = new Sprite(material);
-      sprite.layers.enable( 1 );
+      sprite.layers.enable(1);
       return sprite;
     },
     helpers() {

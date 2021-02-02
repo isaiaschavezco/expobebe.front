@@ -11,30 +11,60 @@
     />
 
     <div v-if="!isPageLoading" class="flex items-center justify-center w-full">
-      <div class="flex flex-wrap justify-center items-center px-1 mx-2 scrollbar mb-5">
+      <div
+        class="w-full md:w-10/12 mx-auto grid grid-flow-row auto-rows-min grid-cols-1 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 grid-rows-3 gap-5 flex-wrap justify-center items-center md:px-1 scrollbar mb-5"
+      >
         <div
           v-for="product in products"
           :key="product._id"
           :class="'bg-' + principalColor"
-          class="cursor-pointer card-brand overflow-hidden mt-3 md:ml-5 borde-disimulado imagen-brand-toy"
+          class="cursor-pointer card-brand overflow-hidden borde-disimulado imagen-brand-toy"
           @click="onTradeMarkClick(product)"
         >
           <div
-            class="w-full h-full precarga bg-white2 bg-white border-bottom-left-radius"
+            class="w-full precarga bg-white2 bg-white border-bottom-left-radius imagen__card-brand"
           >
             <img
-              class="shadow-xl push-boton border-show imagen-j rounded-lg border-bottom-left-radius"
+              class="shadow-xl push-boton border-show object-contain rounded-lg border-bottom-left-radius"
               :src="product.urlThumbnail"
               alt=""
               v-lazy-load
             />
           </div>
           <div
-            class="text-left lg:px-3 py-1 text-sm md:text-lg lg:text-xl borde-disimulado font-semibold title-component-style"
+            class="footer__card-brand text-center md:text-left px-2 py-1 text-sm md:text-sm xl:text-lg borde-disimulado font-semibold title-component-style flex justify-content items-center"
           >
-            {{ product.name.slice(0, 30) }}
+            <p>
+              {{ product.name.slice(0, 50) }}
+            </p>
           </div>
         </div>
+        <div
+          v-for="product in products"
+          :key="product._id"
+          :class="'bg-' + principalColor"
+          class="cursor-pointer card-brand overflow-hidden borde-disimulado imagen-brand-toy"
+          @click="onTradeMarkClick(product)"
+        >
+          <div
+            class="w-full precarga bg-white2 bg-white border-bottom-left-radius imagen__card-brand"
+          >
+            <img
+              class="shadow-xl push-boton border-show object-contain rounded-lg border-bottom-left-radius"
+              :src="product.urlThumbnail"
+              alt=""
+              v-lazy-load
+            />
+          </div>
+          <div
+            class="footer__card-brand text-center md:text-left px-2 py-1 text-sm md:text-sm xl:text-lg borde-disimulado font-semibold title-component-style flex justify-content items-center"
+          >
+            <p>
+              {{ product.name.slice(0, 50) }}
+            </p>
+          </div>
+        </div>
+
         <h1 class="text-lg" v-if="products.length === 0">
           Parece que esta marca aún no tiene productos
         </h1>
@@ -170,15 +200,21 @@ export default {
   -moz-box-shadow: 0px 2px 29px -17px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 2px 29px -17px rgba(0, 0, 0, 0.75);
   min-height: 15rem;
-  min-width: 18rem;
-  max-width: 18%;
+  max-height: 100%;
+  height: 100%;
+}
+.imagen__card-brand {
+  height: 75%;
+  overflow: hidden;
+}
+.footer__card-brand {
+  height: 25%;
 }
 .bg-white2 {
   background: white !important;
 }
 .title-component-style {
   color: white;
-  padding: 1rem 1rem;
 }
 @media screen and (min-width: 2000px) {
   .title-component-style {
