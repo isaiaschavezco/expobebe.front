@@ -4,9 +4,7 @@
       <div
         id="loading-container-expobebe"
         class="flex items-center m-auto h-full w-screen"
-      >
-        <Logo class="animate-pulse" />
-      </div>
+      ></div>
     </div>
   </div>
 </template>
@@ -82,8 +80,6 @@ export default {
       console.log("status.code", data.status.code);
       if (data.status.code === "0000") {
         this.eventToShow = data.result.ultimo_evento;
-        console.log("this.eventToShow", data.result.events);
-        console.log("this.eventToShow", data.result);
         if (this.event3DObject) {
           console.log("this.eventToShow", this.eventToShow);
           this.event3DObject.material.map = new TextureLoader().load(
@@ -91,7 +87,7 @@ export default {
           );
         } else {
           this.event3DObject.material.map = new TextureLoader().load(
-            "./logo_universo.png"
+            "./transparente.png"
           );
         }
       }
@@ -209,7 +205,7 @@ export default {
             );
           } else {
             this.event3DObject.material.map = new TextureLoader().load(
-              "./logo_universo.png"
+              "./transparente.png"
             );
           }
 
