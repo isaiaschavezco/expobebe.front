@@ -2,10 +2,10 @@
   <div>
     <div id="main-container-juguetilandia" class="h-screen w-screen">
       <div
-        id="loading-container-juguetilandia"
+        id="loading-container-expobebe"
         class="flex items-center m-auto h-full w-screen"
       >
-        <Logo class="animate-pulse" />
+        <Logo class="animate-pulse bg-black w-full" />
       </div>
     </div>
   </div>
@@ -145,12 +145,8 @@ export default {
           );
           this.addSelectedObject(gltf.scene.getObjectByName("Letrero_M_Atlas_0", true));
           this.outlinePass.selectedObjects = this.selectedObject;
-          document
-            .getElementById("loading-container-juguetilandia")
-            .classList.remove("flex");
-          document
-            .getElementById("loading-container-juguetilandia")
-            .classList.add("hidden");
+          document.getElementById("loading-container-expobebe").classList.remove("flex");
+          document.getElementById("loading-container-expobebe").classList.add("hidden");
           gltf.scene.getObjectByName(
             "Notificacion_Notificacion_0",
             true

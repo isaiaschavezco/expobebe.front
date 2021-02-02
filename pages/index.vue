@@ -2,7 +2,7 @@
   <div>
     <div id="main-container-juguetilandia" class="h-screen w-screen">
       <div
-        id="loading-container-juguetilandia"
+        id="loading-container-expobebe"
         class="flex items-center m-auto h-full w-screen"
       >
         <Logo class="animate-pulse" />
@@ -143,6 +143,8 @@ export default {
       this.controls.minPolarAngle = Math.PI / 2;
       this.controls.enableZoom = true;
       this.controls.maxDistance = 20;
+      this.controls.rotateSpeed *= -0.2;
+
       this.controls.minDistance = 20;
 
       this.camera.position.set(-500.5, 35, 0);
@@ -212,12 +214,8 @@ export default {
           }
 
           this.scene.add(gltf.scene);
-          document
-            .getElementById("loading-container-juguetilandia")
-            .classList.remove("flex");
-          document
-            .getElementById("loading-container-juguetilandia")
-            .classList.add("hidden");
+          document.getElementById("loading-container-expobebe").classList.remove("flex");
+          document.getElementById("loading-container-expobebe").classList.add("hidden");
         },
         function (xhr) {
           console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
