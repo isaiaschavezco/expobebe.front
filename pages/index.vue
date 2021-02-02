@@ -141,10 +141,9 @@ export default {
       this.controls.maxAzimuthAngle = 2 * Math.PI;
       this.controls.maxPolarAngle = Math.PI / 2;
       this.controls.minPolarAngle = Math.PI / 2;
-      this.controls.rotateSpeed *= -0.2;
       this.controls.enableZoom = true;
-      // this.controls.maxDistance = 20;
-      // this.controls.minDistance = 20;
+      this.controls.maxDistance = 20;
+      this.controls.minDistance = 20;
 
       this.camera.position.set(-500.5, 35, 0);
       this.camera.position.y = 35;
@@ -163,7 +162,7 @@ export default {
 
       // Raycast
       this.raycaster = new Raycaster();
-      this.raycaster.layers.set(1);
+      // this.raycaster.layers.set(1);
 
       // Composer
       this.composer = new EffectComposer(this.renderer);
@@ -324,13 +323,10 @@ export default {
       this.composer.render();
     },
     onInteractionEvent(event) {
-      event.preventDefault(this.scene.children);
+      event.preventDefault();
       //Se escogen los botones para evitar que el raycaster haga una búsqueda exaustiva
-      let buttos = [
-        this.scene.children[2],
-        this.scene.children[3],
-        this.scene.children[4],
-      ];
+      this.raycaster.setFromCamera(this.mouseData, this.camera);
+
       const intersects = this.raycaster.intersectObjects(this.scene.children, true);
 
       if (intersects.length > 0) {
@@ -402,31 +398,16 @@ export default {
       this.mouseData.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
       this.raycaster.setFromCamera(this.mouseData, this.camera);
-      // calculate objects intersecting the picking ray
-      const intersects = this.raycaster.intersectObjects(this.scene.children, true);
-      if (intersects.length > 0) {
-        if (intersects[0].object.name === "postparto") {
-          document.body.style.cursor = "pointer";
-        } else if (intersects[0].object.name === "primeros") {
-          document.body.style.cursor = "pointer";
-        } else if (intersects[0].object.name === "embarazo") {
-          document.body.style.cursor = "pointer";
-        } else if (intersects[0].object.name === "PantallaFade_MT_PantallaFade_0") {
-          document.body.style.cursor = "pointer";
-        } else {
-          document.body.style.cursor = "auto";
-        }
-      }
     },
 
     onTouchInteraction(event) {
+      console.log("TOUCHSTART");
+
       this.mouseData.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
       this.mouseData.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
       this.onInteractionEvent(event);
     },
-    addSelectedObject(object) {
-      this.selectedObject.push(object);
-    },
+
     formatDate(date) {
       const d = new Date(date);
       let month = "" + (d.getMonth() + 1);
