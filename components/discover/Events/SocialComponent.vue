@@ -1,5 +1,7 @@
 <template>
-  <div class="w-11/12 lg:w-9/12 modal_container bg-white card-rounded overflow-hidden">
+  <div
+    class="w-11/12 lg:w-9/12 modal_container__evento bg-white card-rounded overflow-hidden"
+  >
     <!--Header-->
     <div
       :class="colorCard ? colorCard : 'bg-white'"
@@ -91,18 +93,21 @@ input::before,
 input::after {
   border: none;
 }
-.modal_container {
+.modal_container__evento {
   border-radius: 13pt;
   margin: auto;
   margin-top: 5%;
   height: auto;
+  max-height: 90%;
 }
 @media screen and (max-width: 1200px) {
-  .modal_container {
+  .modal_container__evento {
     height: 90%;
+    max-height: 90%;
   }
   .buttons__chat {
     height: 30%;
+    max-height: 30%;
   }
 }
 @media screen and (min-width: 768px) {
