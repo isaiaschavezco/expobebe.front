@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-full flex items-center overflow-y-scroll mb-10">
+  <div class="w-full h-full flex items-center overflow-y-scroll">
     <ShopingCardList v-if="shopingCarListStatus" />
     <ModalFinishedCart v-if="isFinishedCartModalShown" />
     <ModalSantaVideo v-if="isSantaVideoModalShown" />

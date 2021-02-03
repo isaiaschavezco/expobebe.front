@@ -24,6 +24,14 @@
       :currentVideoUrl="currentVideoUrl"
       :currentTitle="currentTitle"
     />
+    <div class="w-full flex justify-center items-center">
+      <h1
+        class="w-full text-gray-800 text-center font-semibold text-sm md:text-lg"
+        v-if="videos.length === 0"
+      >
+        Parece que no hay videos en esta sección.
+      </h1>
+    </div>
   </div>
 </template>
 
@@ -46,6 +54,7 @@ export default {
       isVideoModalShown: false,
       currentVideoUrl: "",
       currentTitle: "",
+      videos: [],
     };
   },
   computed: {
@@ -68,6 +77,7 @@ export default {
     this.typeScreen = this.$store.state.menu.currentSection;
     const { data } = await this.$api.book.getAll(this.typeScreen);
     this.videos = data.result.books;
+    console.log(this.videos);
     this.isPageLoading = false;
   },
   mounted() {

@@ -3,12 +3,6 @@
     <div v-if="isPageLoading" class="flex flex-col items-center justify-center h-full">
       <div class="preloader"></div>
     </div>
-    <h2
-      class="w-full font-bold text-center mt-10 text-gray-600 lg:text-2xl"
-      v-if="eventsToRender.length === 0"
-    >
-      Parece que no hay eventos en este mes.
-    </h2>
 
     <!-- Carrete de Calendario -->
     <Carrete
@@ -17,6 +11,12 @@
       :months="months"
       :selectedMonth="selectedMonth"
     />
+    <h2
+      class="w-full font-bold text-center mt-32 text-graycorp lg:text-2xl"
+      v-if="eventsToRender.length === 0"
+    >
+      Parece que no hay eventos en este mes.
+    </h2>
     <!-- Eventos -->
     <div class="w-full h-full md:w-8/12 mx-auto mt-12 flex flex-col">
       <div class="event-rows-container pb-32">
