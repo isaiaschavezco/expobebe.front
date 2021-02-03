@@ -18,7 +18,6 @@ html {
   height: 100vh;
 }
 .splash-screen__container {
-  background: #fff4c7;
 }
 
 .img_splash-screen {

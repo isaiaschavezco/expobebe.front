@@ -176,7 +176,7 @@ img {
 }
 
 .background {
-  background: url("../assets/img/moviles/background.png");
+  background: white url("../assets/img/moviles/background.png");
   background-size: cover;
 }
 
