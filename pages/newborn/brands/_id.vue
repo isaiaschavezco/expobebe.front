@@ -34,8 +34,8 @@
           <div
             class="footer__card-brand text-center md:text-left text-sm md:text-sm xl:text-lg borde-disimulado font-semibold title-component-style flex justify-content items-center"
           >
-            <p>
-              {{ product.name.slice(0, 50) }}
+            <p class="break-words">
+              {{ product.name.slice(0, 100) }}
             </p>
           </div>
         </div>
