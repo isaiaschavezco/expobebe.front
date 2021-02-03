@@ -247,17 +247,6 @@ export default {
           this.scene.background = rt;
         }
       );
-
-      // let urls = [
-      //   "skybox/Cielo_NZ.jpg",
-      //   "skybox/Cielo_PZ.jpg",
-      //   "skybox/Cielo_PY.jpg",
-      //   "skybox/Cielo_NY.jpg",
-      //   "skybox/Cielo_PX.jpg",
-      //   "skybox/Cielo_NX.jpg",
-      // ];
-      // let loader = new CubeTextureLoader();
-      // this.scene.background = loader.load(urls);
     },
     createSprite(url) {
       const map = new TextureLoader().load(url);
@@ -392,11 +381,24 @@ export default {
       this.mouseData.y = -(event.clientY / window.innerHeight) * 2 + 1;
 
       this.raycaster.setFromCamera(this.mouseData, this.camera);
+      const intersects = this.raycaster.intersectObjects(this.scene.children, true);
+      if (intersects.length > 0) {
+        let objetoIntersectado = intersects[0].object.name;
+        console.log("Inte", objetoIntersectado);
+        if (
+          objetoIntersectado === "primeros" ||
+          objetoIntersectado === "postparto" ||
+          objetoIntersectado === "embarazo" ||
+          objetoIntersectado === "PantallaFade_MT_PantallaFade_0"
+        ) {
+          document.body.style.cursor = "pointer";
+        } else {
+          document.body.style.cursor = "default";
+        }
+      }
     },
 
     onTouchInteraction(event) {
-      console.log("TOUCHSTART");
-
       this.mouseData.x = (event.touches[0].clientX / window.innerWidth) * 2 - 1;
       this.mouseData.y = -(event.touches[0].clientY / window.innerHeight) * 2 + 1;
       this.onInteractionEvent(event);

@@ -157,6 +157,9 @@ export default {
   --header-z-index: 10000;
   --header-z-indexplus: 20000;
 }
+img {
+  border: solid 1px rgba(0, 0, 0, 0.001);
+}
 
 @media screen and (max-width: 768px) {
   .h-50 {
@@ -165,7 +168,7 @@ export default {
 }
 
 .precarga {
-  background: transparent url("../assets/img/moviles/icon_imagen.svg") center no-repeat;
+  background: white url("../assets/img/moviles/icon_imagen.svg") center no-repeat;
 }
 
 .background {
@@ -231,11 +234,6 @@ header {
 }
 .invisible-scrollbar::-webkit-scrollbar {
   opacity: 0.1;
-}
-
-.border-show {
-  border: solid 1px rgba(0, 0, 0, 0.0001);
-  min-width: 100%;
 }
 
 .boton {

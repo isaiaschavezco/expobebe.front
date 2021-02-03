@@ -25,7 +25,7 @@
             class="w-full precarga bg-white2 bg-white border-bottom-left-radius imagen__card-brand flex justify-center ites-center"
           >
             <img
-              class="shadow-xl img__cardproduct push-boton border-show object-contain rounded-lg border-bottom-left-radius"
+              class="img__cardproduct precarga push-boton object-contain rounded-lg border-bottom-left-radius"
               :src="product.urlThumbnail"
               alt=""
               v-lazy-load
@@ -182,10 +182,12 @@ export default {
   height: 80%;
   overflow: hidden;
   max-height: 15rem;
+  min-width: 10rem;
   min-height: 15rem;
 }
 .img__cardproduct {
   max-height: 15rem;
+  min-width: 10rem;
   min-height: 15rem;
 }
 
