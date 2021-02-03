@@ -5,7 +5,11 @@
     @click="this.function"
   >
     <div class="p-5 lg:p-8 header__cardsection">
-      <img class="mb-5 w-full object-cover img__cardsection" :src="urlImage" :alt="alt" />
+      <img
+        class="preload mb-5 w-full object-cover img__cardsection"
+        :src="urlImage"
+        :alt="alt"
+      />
     </div>
     <div
       :class="colorButton ? colorButton : 'bg-bluenewborn'"

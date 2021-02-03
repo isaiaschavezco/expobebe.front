@@ -15,6 +15,8 @@ export const mutations = {
   },
   setCurrentSection (state, section) {
     state.currentSection = section
+    localStorage.setItem('currentSection',section);
+
   },
   setColor (state, color) {
     state.color = color
@@ -26,12 +28,9 @@ export const mutations = {
     state.isButtonShopingCarVisible = isVisible
   },
   validateTypeScreen (state) {
-    // if (localStorage) {
-    //   const cat = localStorage.getItem('currentSection');
-    //   state.currentSection = cat
-      
-    // }
-
+    
+      const cat = localStorage.getItem('currentSection');
+      state.currentSection = cat
       if( !state.currentSection || state.currentSection === '' )
       {
           this.$router.push({

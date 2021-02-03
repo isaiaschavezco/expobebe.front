@@ -9,15 +9,16 @@
     <header class="fixed flex justify-around items-center pt-1" :class="headerColor">
       <div class="flex justify-around w-full pt-1 h-full text-center">
         <div class="flex flex-col items-center justify-center h-full ml-5 pt-2 md:ml-10">
-          <img
-            class="h-12 w-12 lg:h-12 lg:w-12 left-4 cursor-pointer"
-            src="@/assets/img/moviles/icon_back.svg"
-            alt="Back"
-            @click="$router.go(-1)"
-          />
+          <span @click="goBack">
+            <img
+              class="h-12 w-12 lg:h-12 lg:w-12 left-4 cursor-pointer"
+              src="https://assets.expobebe.asia/assets/icon_back.svg"
+              alt="Back"
+            />
+          </span>
           <img
             class="h-10 w-10 lg:h-12 lg:w-12 left-4 cursor-pointer"
-            src="@/assets/img/moviles/icon_home.svg"
+            src="https://assets.expobebe.asia/assets/icon_home.svg"
             alt="Home"
             @click="onGoToHome"
           />
@@ -37,7 +38,7 @@
       >
         <img
           class="botonHeader left-2 text-white h-10 w-10 lg:h-12 lg:w-12"
-          :src="require('@/assets/img/moviles/icon_wishlist.svg')"
+          src="https://assets.expobebe.asia/assets/icon_wishlist.svg"
           alt="ShopingCar"
           @click="onShopingCarButtonClick"
         />
@@ -130,6 +131,9 @@ export default {
       this.$router.push({
         name: "index",
       });
+    },
+    goBack() {
+      window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
     onShopingCardOpen() {
       this.isShopingCardOpen = true;

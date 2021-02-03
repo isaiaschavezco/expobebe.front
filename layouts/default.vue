@@ -1,5 +1,7 @@
 <template>
-  <div class="flex default test-bg-blue DEF test-menu"><Nuxt />+</div>
+  <div class="splash-screen__container fixed inset-0">
+    <Nuxt />
+  </div>
 </template>
 
 <style>
@@ -15,29 +17,52 @@ html {
   min-height: 100vh;
   height: 100vh;
 }
+.splash-screen__container {
+  background: #fff4c7;
+}
 
-.test-menu {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  left: 0;
-}
-.DEF {
+.img_splash-screen {
+  object-fit: cover;
   height: 100%;
+  width: 100%;
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: 110;
 }
-body {
-  height: 100%;
+.logo__img_splash-screen {
+  width: 30%;
+  z-index: 120;
 }
 
 @media screen and (min-width: 768px) {
-  .test-bg-blue {
-    background-size: contain;
+  .logo__img_splash-screen {
+    width: 20%;
+  }
+  .estrella__loading {
+    width: 25rem !important;
+    margin: auto auto;
   }
 }
-.test-bg-blue {
-  background: url("https://expobebe.fra1.digitaloceanspaces.com/plashscreen.png");
-  background-size: cover;
-  background-position: center;
+
+.estrella__loading {
+  position: absolute;
+  z-index: 100;
+  width: 13rem;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-duration: 5s;
+  animation-name: spinner-loading;
+}
+
+@keyframes spinner-loading {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.3);
+  }
+  to {
+    transform: rotate(1turn) scale(0.9);
+  }
 }
 </style>

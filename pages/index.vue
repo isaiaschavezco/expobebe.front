@@ -4,7 +4,27 @@
       <div
         id="loading-container-expobebe"
         class="flex items-center m-auto h-full w-screen"
-      ></div>
+      >
+        <div class="fixed w-full h-full flex justify-center items-center">
+          <img
+            class="logo__img_splash-screen"
+            src="/splashcreen/logo_desktop.png"
+            alt="cargando"
+          />
+          <img src="/splashcreen/estrella_descktop.png" class="estrella__loading" />
+        </div>
+        <picture>
+          <source
+            srcset="https://assets.expobebe.asia/assets/macrotextura_480.png"
+            media="(max-width:480px)"
+          />
+          <img
+            class="img_splash-screen"
+            src="https://assets.expobebe.asia/assets/macrotextura_1280.png"
+            alt="cargando"
+          />
+        </picture>
+      </div>
     </div>
   </div>
 </template>
@@ -181,7 +201,7 @@ export default {
       const loader = new GLTFLoader();
       loader.setDRACOLoader(dracoLoader);
       loader.load(
-        "https://cdn.glitch.com/4390c048-0cf2-49a3-ab03-4f452164ad25%2Fscene.gltf?v=1612294498206",
+        "https://assets.expobebe.asia/scene.gltf",
         (gltf) => {
           gltf.scene.position.set(0, -33, 0);
           gltf.scene.rotation.y = MathUtils.degToRad(-90);
@@ -210,7 +230,6 @@ export default {
           }
 
           this.scene.add(gltf.scene);
-          document.getElementById("loading-container-expobebe").classList.remove("flex");
           document.getElementById("loading-container-expobebe").classList.add("hidden");
         },
         function (xhr) {
@@ -265,17 +284,23 @@ export default {
       this.logoButton.scale.set(50, 50, 0);
       this.logoButton.name = "logo";
 
-      this.embarazoButton = this.createSprite("./botones/embarazo.png");
+      this.embarazoButton = this.createSprite(
+        "https://assets.expobebe.asia/assets/embarazo.png"
+      );
       this.embarazoButton.scale.set(48, 48, 0);
       this.embarazoButton.position.set(40, 27, -94);
       this.embarazoButton.name = "embarazo";
 
-      this.postpartoButton = this.createSprite("./botones/postparto.png");
+      this.postpartoButton = this.createSprite(
+        "https://assets.expobebe.asia/assets/postparto.png"
+      );
       this.postpartoButton.scale.set(48, 48, 0);
       this.postpartoButton.position.set(48, 34, 5);
       this.postpartoButton.name = "postparto";
 
-      this.primerosButton = this.createSprite("./botones/primeros.png");
+      this.primerosButton = this.createSprite(
+        "https://assets.expobebe.asia/assets/primeros.png"
+      );
       this.primerosButton.scale.set(48, 48, 0);
       this.primerosButton.position.set(40, 27, 86);
       this.primerosButton.name = "primeros";
