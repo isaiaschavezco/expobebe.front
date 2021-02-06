@@ -1,12 +1,12 @@
 <template>
-  <div class="w-11/12 lg:w-8/12 modal_container bg-white card-rounded overflow-hidden">
+  <div class="w-11/12 lg:w-8/12 modal_container_ bg-white card-rounded overflow-hidden">
     <div
       :class="colorCard ? colorCard : 'bg-white'"
       class="video-header relative text-white w-full h-1/6 p-4"
     >
-      <h3 class="ml-8 lg:text-2xl font-semibold">{{ title }}</h3>
+      <h3 class="ml-1 md:ml-8 lg:text-2xl font-semibold w-10/12">{{ title }}</h3>
       <button
-        class="absolute top-0 right-0 mt-4 mr-10 font-bold h-6 w-6 flex items-center justify-center text-white shopingList_burguer-button"
+        class="absolute top-0 right-0 mt-4 mr-4 md:mr-10 font-bold h-6 w-6 flex items-center justify-center text-white shopingList_burguer-button"
         @click="closeFunction"
       >
         <p class="place-self-center">&times;</p>
@@ -46,7 +46,7 @@ export default {
   }
 }
 
-.modal_container {
+.modal_container_ {
   height: auto;
   border-radius: 13pt;
   margin: auto;

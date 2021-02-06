@@ -4,9 +4,7 @@
     <div v-if="isPageLoading" class="flex flex-col items-center justify-center h-full">
       <div class="preloader"></div>
     </div>
-    <div
-      class="flex flex-col items-center justify-center md:grid md:gap-8 px-10 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 lg:gap-8 overflow-y-scroll py-10 lg:px-20 w-full"
-    >
+    <div class="flex flex-wrap items-center justify-center py-10 lg:px-20 w-full">
       <PostLibrary
         v-for="item in this.videos"
         :key="item.id"
