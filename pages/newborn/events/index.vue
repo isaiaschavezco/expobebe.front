@@ -5,12 +5,7 @@
     </div>
 
     <!-- Carrete de Calendario -->
-    <Carrete
-      :functionNext="onNextMonthClicked"
-      :functionBefore="onPreviousMonthClicked"
-      :months="months"
-      :selectedMonth="selectedMonth"
-    />
+
     <h2
       class="w-full font-bold text-center mt-32 text-graycorp lg:text-2xl"
       v-if="eventsToRender.length === 0"
@@ -43,7 +38,7 @@
               </div>
             </div>
             <div
-              class="w-full flex flex-col md:flex-row md:flex-wrap justify-center items-center"
+              class="w-full flex flex-col md:flex-row md:flex-wrap justify-center items-center mb-5"
             >
               <CardEvent
                 v-for="event in eventByDate[1]"
@@ -60,7 +55,7 @@
           </div>
         </div>
       </div>
-      <div class="event-footer w-full bg-transparent py-3" @click="onNextMonthClicked">
+      <!-- <div class="event-footer w-full bg-transparent py-3" @click="onNextMonthClicked">
         <button
           :class="principalColor"
           class="flex justify-center mx-auto my-auto w-10/12 md:w-4/12 py-2 text-white font-bold shadow-xl"
@@ -82,7 +77,7 @@
             srcset=""
           />
         </button>
-      </div>
+      </div>-->
       <!--  -->
       <!--  -->
     </div>
@@ -214,8 +209,7 @@ export default {
       );
       const { data } = await this.$api.event.getByDatesRange(
         `${this.formatDate(this.nextDateToQuery)}`,
-        `${this.formatDate(this.prevDateToQuery)}`,
-        this.typeScreen
+        `${this.formatDate(this.prevDateToQuery)}`
       );
       console.log("response: ", data);
       if (data.status.code === "0000") {

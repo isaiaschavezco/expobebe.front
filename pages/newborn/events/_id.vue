@@ -60,7 +60,7 @@ export default {
   methods: {
     async getEventById(eventId) {
       try {
-        const { data } = await this.$api.event.getById(eventId, this.typeScreen);
+        const { data } = await this.$api.event.getById(eventId);
         if (data.status.code === "0000") {
           this.event = data.result.event;
           console.log("==================: ");
@@ -79,7 +79,7 @@ export default {
             eventId: this.eventId,
           };
           console.log("No había chat", chatData);
-          const { data } = await this.$api.chat.create(chatData, this.typeScreen);
+          const { data } = await this.$api.chat.create(chatData);
           console.log("--->", data);
           if (data.status.code === "1013") return;
           await this.getChatByEventId();
@@ -89,11 +89,7 @@ export default {
         const chatData = {
           comment: message,
         };
-        const { data } = await this.$api.chat.addComment(
-          chatId,
-          chatData,
-          this.typeScreen
-        );
+        const { data } = await this.$api.chat.addComment(chatId, chatData);
         console.log("...............");
         console.log(data);
         console.log("...............");
@@ -110,7 +106,7 @@ export default {
 
     async getChatByEventId() {
       try {
-        const { data } = await this.$api.chat.getByEvent(this.eventId, this.typeScreen);
+        const { data } = await this.$api.chat.getByEvent(this.eventId);
         console.log("SE PIDIÓ UN CHAT,", data);
         if (data.status.code === "0000") {
           this.chat = data.result.chat;

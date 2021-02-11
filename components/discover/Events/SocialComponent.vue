@@ -7,9 +7,13 @@
       :class="colorCard ? colorCard : 'bg-white'"
       class="video-header relative text-white w-full h-1/6 p-2"
     >
-      <h3 class="ml-8 lg:text-2xl font-semibold">{{ title }}</h3>
+      <h3
+        class="ml-8 text-sm text-center md:text-left md:text-lg lg:text-2xl font-semibold"
+      >
+        {{ title }}
+      </h3>
     </div>
-    <div class="lg:p-4 flex flex-wrap md:flex-row h-full">
+    <div class="lg:p-4 flex flex-wrap md:flex-row h-full mitad-derecha">
       <!-- Mitad derecha - Video -->
       <!-- <div class="w-full xl:w-7/12 h-full bg-black"> -->
       <div class="w-full xl:w-7/12">
@@ -120,6 +124,10 @@ input::after {
   -webkit-box-shadow: 0px 2px 33px -17px rgba(0, 0, 0, 0.75);
   -moz-box-shadow: 0px 2px 33px -17px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 2px 33px -17px rgba(0, 0, 0, 0.75);
+  height: 15%;
+}
+.mitad-derecha {
+  height: 85%;
 }
 .contenedor-video {
   height: 0px;
