@@ -18,7 +18,12 @@
       <!-- <div class="w-full xl:w-7/12 h-full bg-black"> -->
       <div class="w-full xl:w-7/12">
         <div class="contenedor-video precarga">
-          <iframe :src="urlVideo" class="frame"></iframe>
+          <iframe
+            :src="urlVideo"
+            class="frame"
+            allow="autoplay; encrypted-media; picture-in-picture"
+            allowfullscreen
+          ></iframe>
         </div>
       </div>
 

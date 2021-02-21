@@ -1,6 +1,7 @@
 <template>
   <div
-    class="w-full bg-bluenewborn cursor-pointer mt-5 card-library card-rounded ml-3"
+    class="w-full cursor-pointer mt-5 card-library card-rounded ml-3"
+    :class="colorCard ? colorCard : 'bg-white'"
     @click="mostrarModal"
   >
     <div class="header__postlibrary border-bottom-left-radius overflow-hidden">
